@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "dsm.service.schedule.proto";
+option java_outer_classname = "ScheduleProto";
+
+package schedule;
+
+
+service ScheduleService {
+    rpc GetTimeTable(GetTimeTableRequest) returns (GetTimeTableResponse) {}
+    rpc GetSchedule(GetScheduleRequest) returns (GetScheduleResponse) {}
+    rpc CreateSchedule(CreateScheduleRequest) returns (DefaultScheduleResponse) {}
+    rpc UpdateSchedule(UpdateScheduleRequest) returns (DefaultScheduleResponse) {}
+    rpc DeleteSchedule(DeleteScheduleRequest) returns (DefaultScheduleResponse) {}
+}
+
+message GetTimeTableRequest {
+    string uuid = 1;
+}
+
+message GetTimeTableResponse {
+    int32 status = 1;
+    int32 code = 2;
+    string msg = 3;
+    string time1 = 4;
+    string time2 = 5;
+    string time3 = 6;
+    string time4 = 7;
+    string time5 = 8;
+    string time6 = 9;
+    string time7 = 10;
+}
+
+message GetScheduleRequest {
+    string uuid = 1;
+}
+
+message GetScheduleResponse {
+    int32 status = 1;
+    int32 code = 2;
+    string msg = 3;
+    repeated Schedule schedule = 4;
+}
+
+message Schedule {
+    string scheduleUUID = 1;
+    string startMonth = 2;
+    string startDay = 3;
+    string endMonth = 4;
+    string endDay = 5;
+    string detail = 6;
+}
+
+message DefaultScheduleResponse {
+    int32 status = 1;
+    int32 code = 2;
+    string msg = 3;
+}
+
+message CreateScheduleRequest {
+    string uuid = 1;
+    string startMonth = 2;
+    string startDay = 3;
+    string endMonth = 4;
+    string endDay = 5;
+    string detail = 6;
+}
+
+message UpdateScheduleRequest {
+    string uuid = 1;
+    string scheduleUUID = 2;
+    string startMonth = 3;
+    string startDay = 4;
+    string endMonth = 5;
+    string endDay = 6;
+    string detail = 7;
+}
+
+message DeleteScheduleRequest {
+    string uuid = 1;
+    string scheduleUUID = 2;
+}

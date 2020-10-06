@@ -45,11 +45,9 @@ message GetScheduleResponse {
 
 message Schedule {
     string scheduleUUID = 1;
-    string startMonth = 2;
-    string startDay = 3;
-    string endMonth = 4;
-    string endDay = 5;
-    string detail = 6;
+    int64 startDate = 2;
+    int64 endDate = 3;
+    string detail = 4;
 }
 
 message DefaultScheduleResponse {
@@ -60,21 +58,17 @@ message DefaultScheduleResponse {
 
 message CreateScheduleRequest {
     string uuid = 1;
-    string startMonth = 2;
-    string startDay = 3;
-    string endMonth = 4;
-    string endDay = 5;
-    string detail = 6;
+    int64 startDate = 2;
+    int64 endDate = 3;
+    string detail = 4;
 }
 
 message UpdateScheduleRequest {
     string uuid = 1;
     string scheduleUUID = 2;
-    string startMonth = 3;
-    string startDay = 4;
-    string endMonth = 5;
-    string endDay = 6;
-    string detail = 7;
+    int64 startDate = 3;
+    int64 endDate = 4;
+    string detail = 5;
 }
 
 message DeleteScheduleRequest {

@@ -17,7 +17,7 @@ public class ScheduleServiceGrpc extends ScheduleServiceImplBase {
 
     @Override
     public void createSchedule(CreateScheduleRequest request, StreamObserver<DefaultScheduleResponse> responseObserver) {
-//        responseObserver.onNext(scheduleService.getScheduleService());
+        responseObserver.onNext(scheduleService.createScheduleService(request));
         responseObserver.onCompleted();
     }
 

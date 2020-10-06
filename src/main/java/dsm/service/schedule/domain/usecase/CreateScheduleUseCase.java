@@ -4,6 +4,6 @@ import java.time.LocalDate;
 
 public interface CreateScheduleUseCase {
     public void run(
-            String teacherUuid, String detail, LocalDate startTime, LocalDate endTime
+            String teacherUuid, String detail, Long startTime, Long endTime
     );
 }

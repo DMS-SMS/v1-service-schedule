@@ -17,14 +17,14 @@ public class CreateScheduleUseCaseImpl implements CreateScheduleUseCase {
 
     @Override
     public void run(
-            String teacherUuid, String detail, LocalDate startTime, LocalDate endTime) {
+            String teacherUuid, String detail, Long startTime, Long endTime) {
         scheduleRepository.save(
                 Schedule.builder()
                         .uuid(uuidService.generateUuid())
                         .teacherUuid(teacherUuid)
                         .detail(detail)
-                        .startDate(startTime)
-                        .endDate(endTime)
+                        .startDate(LocalDate.ofEpochDay(startTime))
+                        .endDate(LocalDate.ofEpochDay(endTime))
                         .build()
         );
     }

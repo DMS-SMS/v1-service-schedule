@@ -4,11 +4,12 @@ package dsm.service.schedule.domain.usecase;
 import dsm.service.schedule.domain.entity.Schedule;
 import dsm.service.schedule.domain.repository.ScheduleRepository;
 import dsm.service.schedule.domain.service.UuidService;
-import jdk.vm.ci.meta.Local;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+@Component
 @AllArgsConstructor
 public class CreateScheduleUseCaseImpl implements CreateScheduleUseCase {
     final private ScheduleRepository scheduleRepository;
@@ -17,7 +18,8 @@ public class CreateScheduleUseCaseImpl implements CreateScheduleUseCase {
 
     @Override
     public void run(
-            String teacherUuid, String detail, Long startTime, Long endTime) {
+            String teacherUuid, String detail, Long startTime, Long endTime
+    ) {
         scheduleRepository.save(
                 Schedule.builder()
                         .uuid(uuidService.generateUuid())

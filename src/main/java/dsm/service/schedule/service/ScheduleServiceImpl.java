@@ -29,6 +29,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public DefaultScheduleResponse createScheduleService(CreateScheduleRequest request) {
         createScheduleUseCase.run(request.getUuid(), request.getDetail(), request.getStartDate(), request.getEndDate());
-        return DefaultScheduleResponse.newBuilder().setStatus(201)
+        return DefaultScheduleResponse.newBuilder().setStatus(201).build();
     }
 }

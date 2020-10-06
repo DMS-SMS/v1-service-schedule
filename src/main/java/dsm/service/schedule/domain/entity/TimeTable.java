@@ -1,37 +1,48 @@
 package dsm.service.schedule.domain.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
-@Entity
+@Getter
+@Entity(name="tbl_time_table")
+@NoArgsConstructor
+@AllArgsConstructor
 public class TimeTable {
-    @Column
-    private int grade;
+    @Id
+    private String uuid;
 
-    @Column
-    private int group;
+    @Column(nullable = false)
+    private Integer target_grade;
 
-    @Column
-    private int week;
+    @Column(nullable = false)
+    private Integer target_group;
 
-    @Column(length = 20)
-    private String time1;
-
-    @Column(length = 20)
-    private String time2;
+    @Column(nullable = false)
+    private Integer week;
 
     @Column(length = 20)
-    private String time3;
+    private String firstPeriod;
 
     @Column(length = 20)
-    private String time4;
+    private String secondPeriod;
 
     @Column(length = 20)
-    private String time5;
+    private String thirdPeriod;
 
     @Column(length = 20)
-    private String time6;
+    private String fourthPeriod;
 
     @Column(length = 20)
-    private String time7;
+    private String fifthPeriod;
+
+    @Column(length = 20)
+    private String sixthPeriod;
+
+    @Column(length = 20)
+    private String seventhPeriod;
 }

@@ -1,7 +1,10 @@
 package dsm.service.schedule.domain.usecase;
 
+import dsm.service.schedule.domain.entity.Account;
 import dsm.service.schedule.domain.entity.Schedule;
+import dsm.service.schedule.domain.exception.UnauthorizedException;
 import dsm.service.schedule.domain.repository.ScheduleRepository;
+import dsm.service.schedule.domain.repository.TeacherRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,11 +16,18 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UpdateScheduleUseCaseImpl implements UpdateScheduleUseCase {
     private final ScheduleRepository scheduleRepository;
+    private final TeacherRepository teacherRepository;
 
     @Override
     public void run(String teacherUuid, String scheduleUuid, String detail, Long startTime, Long endTime) {
-        scheduleRepository.findById(scheduleUuid).ifPresent(
-                schedule -> {
+        Optional<Account> account = teacherRepository.findById(teacherUuid);
+
+        if (!account.isPresent()) {
+            throw new UnauthorizedException();
+        }
+
+        scheduleRepository.findById(scheduleUuid)
+                .ifPresent(schedule -> {
                     schedule.setDetail(detail);
                     schedule.setStartDate(LocalDate.ofEpochDay(startTime));
                     schedule.setEndDate(LocalDate.ofEpochDay(endTime));

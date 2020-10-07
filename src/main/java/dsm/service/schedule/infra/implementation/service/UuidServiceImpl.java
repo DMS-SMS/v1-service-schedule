@@ -24,7 +24,7 @@ public class UuidServiceImpl implements UuidService {
         String SALTCHARS = "1234567890";
         StringBuilder salt = new StringBuilder();
         Random rnd = new Random();
-        while (salt.length() < 12) { // length of the random string.
+        while (salt.length() < 13) {
             int index = (int) (rnd.nextFloat() * SALTCHARS.length());
             salt.append(SALTCHARS.charAt(index));
         }
@@ -35,7 +35,7 @@ public class UuidServiceImpl implements UuidService {
     public String generateUuid() {
         String uuid = "schedule-"+generateRandomKey();
         while (checkUuid(uuid)) {
-            uuid = "schedule-" + generateRandomKey();
+            uuid = "schedule-"+generateRandomKey();
         }
         return uuid;
     }

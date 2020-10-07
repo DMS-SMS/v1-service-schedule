@@ -20,7 +20,12 @@ public class TeacherRepositoryImpl implements TeacherRepository {
 
     @Override
     public Optional<Account> findById(String uuid) {
-        GetTeacherInformWithUUIDResponse response = authHandler.getTeacherInform(authMapper.authGetInformRequestMapper(uuid));
-        return authMapper.authGetInformResponseMapper(response);
+        try {
+            return authMapper.authGetInformResponseMapper(
+                    authHandler.getTeacherInform(authMapper.authGetInformRequestMapper(uuid))
+            );
+        } catch (Exception ignored) {
+            return Optional.empty();
+        }
     }
 }

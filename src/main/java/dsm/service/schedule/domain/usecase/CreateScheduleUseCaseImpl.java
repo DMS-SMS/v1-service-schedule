@@ -1,7 +1,9 @@
 package dsm.service.schedule.domain.usecase;
 
 
+import dsm.service.schedule.domain.entity.Account;
 import dsm.service.schedule.domain.entity.Schedule;
+import dsm.service.schedule.domain.exception.UnauthorizedException;
 import dsm.service.schedule.domain.repository.ScheduleRepository;
 import dsm.service.schedule.domain.repository.TeacherRepository;
 import dsm.service.schedule.domain.service.UuidService;
@@ -9,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Component
 @AllArgsConstructor
@@ -22,7 +25,13 @@ public class CreateScheduleUseCaseImpl implements CreateScheduleUseCase {
     public void run(
             String teacherUuid, String detail, Long startTime, Long endTime
     ) {
-        teacherRepository.findById(teacherUuid).ifPresent(
+        Optional<Account> account = teacherRepository.findById(teacherUuid);
+
+        if (!account.isPresent()) {
+            throw new UnauthorizedException();
+        }
+
+        account.ifPresent(
             teacher -> {
                 scheduleRepository.save(
                         Schedule.builder()

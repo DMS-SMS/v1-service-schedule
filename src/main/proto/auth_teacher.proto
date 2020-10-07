@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "dsm.service.schedule.proto";
+option java_outer_classname = "AuthProto";
+
+package schedule;
+
+
+service AuthTeacher {
+    rpc LoginTeacherAuth(LoginTeacherAuthRequest) returns (LoginTeacherAuthResponse) {}
+    rpc ChangeTeacherPW(ChangeTeacherPWRequest) returns (ChangeTeacherPWResponse) {}
+    rpc GetTeacherInformWithUUID(GetTeacherInformWithUUIDRequest) returns (GetTeacherInformWithUUIDResponse) {}
+    rpc GetTeacherUUIDsWithInform(GetTeacherUUIDsWithInformRequest) returns (GetTeacherUUIDsWithInformResponse) {}
+}
+
+message LoginTeacherAuthRequest {
+    string TeacherID = 1;
+    string TeacherPW = 2;
+}
+
+message LoginTeacherAuthResponse {
+    uint32 Status = 1;
+    sint32 Code = 2;
+    string Message = 3;
+    string AccessToken = 4;
+    string LoggedInTeacherUUID = 5;
+}
+
+message ChangeTeacherPWRequest {
+    string UUID = 1;
+    string TeacherUUID = 2;
+    string CurrentPW = 3;
+    string RevisionPW = 4;
+}
+
+message ChangeTeacherPWResponse {
+    uint32 Status = 1;
+    sint32 Code = 2;
+    string Message = 3;
+}
+
+message GetTeacherInformWithUUIDRequest {
+    string UUID = 1;
+    string TeacherUUID = 2;
+}
+
+message GetTeacherInformWithUUIDResponse {
+    uint32 Status = 1;
+    sint32 Code = 2;
+    string Message = 3;
+    uint32 Grade = 4;
+    uint32 Group = 5;
+    string Name = 6;
+    string PhoneNumber = 7;
+}
+
+message GetTeacherUUIDsWithInformRequest {
+    string UUID = 1;
+    uint32 Grade = 2;
+    uint32 Group = 3;
+    string Name = 4;
+    string PhoneNumber = 5;
+}
+
+message GetTeacherUUIDsWithInformResponse {
+    uint32 Status = 1;
+    sint32 Code = 2;
+    string Message = 3;
+    repeated string TeacherUUIDs = 4;
+}

@@ -3,6 +3,7 @@ package dsm.service.schedule.domain.usecase;
 
 import dsm.service.schedule.domain.entity.Schedule;
 import dsm.service.schedule.domain.repository.ScheduleRepository;
+import dsm.service.schedule.domain.repository.TeacherRepository;
 import dsm.service.schedule.domain.service.UuidService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class CreateScheduleUseCaseImpl implements CreateScheduleUseCase {
     final private ScheduleRepository scheduleRepository;
+    final private TeacherRepository teacherRepository;
 
     final private UuidService uuidService;
 
@@ -20,14 +22,18 @@ public class CreateScheduleUseCaseImpl implements CreateScheduleUseCase {
     public void run(
             String teacherUuid, String detail, Long startTime, Long endTime
     ) {
-        scheduleRepository.save(
-                Schedule.builder()
-                        .uuid(uuidService.generateUuid())
-                        .teacherUuid(teacherUuid)
-                        .detail(detail)
-                        .startDate(LocalDate.ofEpochDay(startTime))
-                        .endDate(LocalDate.ofEpochDay(endTime))
-                        .build()
+        teacherRepository.findById(teacherUuid).ifPresent(
+            teacher -> {
+                scheduleRepository.save(
+                        Schedule.builder()
+                                .uuid(uuidService.generateUuid())
+                                .teacherUuid(teacherUuid)
+                                .detail(detail)
+                                .startDate(LocalDate.ofEpochDay(startTime))
+                                .endDate(LocalDate.ofEpochDay(endTime))
+                                .build()
+                );
+            }
         );
     }
 }

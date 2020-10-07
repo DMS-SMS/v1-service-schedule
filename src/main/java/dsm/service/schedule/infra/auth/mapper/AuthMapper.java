@@ -11,7 +11,6 @@ import java.util.Optional;
 @Component
 public class AuthMapper {
     public GetTeacherInformWithUUIDRequest authGetInformRequestMapper(String uuid) {
-        System.out.println(uuid);
         return GetTeacherInformWithUUIDRequest.newBuilder()
                 .setTeacherUUID(uuid)
                 .setUUID(uuid)
@@ -19,7 +18,6 @@ public class AuthMapper {
     }
 
     public Optional<Account> authGetInformResponseMapper(GetTeacherInformWithUUIDResponse response) {
-        System.out.println(response);
         if (response.getStatus() != 200) {
             return Optional.empty();
         }

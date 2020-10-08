@@ -20,11 +20,9 @@ public class UpdateScheduleUseCaseImpl implements UpdateScheduleUseCase {
 
     @Override
     public void run(String teacherUuid, String scheduleUuid, String detail, Long startTime, Long endTime) {
-        Optional<Account> account = teacherRepository.findById(teacherUuid);
+        Account account = teacherRepository.findById(teacherUuid)
+                .orElseThrow(UnauthorizedException::new);
 
-        if (!account.isPresent()) {
-            throw new UnauthorizedException();
-        }
 
         scheduleRepository.findById(scheduleUuid)
                 .ifPresent(schedule -> {

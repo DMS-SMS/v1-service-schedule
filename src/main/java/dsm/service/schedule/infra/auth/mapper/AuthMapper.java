@@ -32,7 +32,14 @@ public class AuthMapper {
                 .build());
     }
 
+    public GetStudentInformWithUUIDRequest authGetStudentInformRequestMapper(String uuid) {
+        return GetStudentInformWithUUIDRequest.newBuilder()
+                .setStudentUUID(uuid)
+                .setUUID(uuid)
+                .build();
+    }
 
+    public Optional<Account> authGetStudentInformResponseMapper(GetStudentInformWithUUIDResponse response) {
         if (response.getStatus() != 200) {
             return Optional.empty();
         }

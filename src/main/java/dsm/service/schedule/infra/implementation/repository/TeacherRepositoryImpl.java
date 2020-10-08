@@ -21,8 +21,8 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     @Override
     public Optional<Account> findById(String uuid) {
         try {
-            return authMapper.authGetInformResponseMapper(
-                    authHandler.getTeacherInform(authMapper.authGetInformRequestMapper(uuid))
+            return authMapper.authGetTeacherInformResponseMapper(
+                    authHandler.getTeacherInform(authMapper.authGetTeacherInformRequestMapper(uuid))
             );
         } catch (Exception ignored) {
             return Optional.empty();

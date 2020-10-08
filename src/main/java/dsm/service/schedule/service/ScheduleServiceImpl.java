@@ -1,15 +1,16 @@
 package dsm.service.schedule.service;
 
 import dsm.service.schedule.domain.entity.Schedule;
-import dsm.service.schedule.domain.usecase.CreateScheduleUseCase;
-import dsm.service.schedule.domain.usecase.DeleteScheduleUseCase;
-import dsm.service.schedule.domain.usecase.GetScheduleUseCase;
-import dsm.service.schedule.domain.usecase.UpdateScheduleUseCase;
+import dsm.service.schedule.domain.entity.TimeTable;
+import dsm.service.schedule.domain.usecase.*;
 import dsm.service.schedule.proto.*;
 import dsm.service.schedule.service.mapper.ScheduleMapper;
+import dsm.service.schedule.service.mapper.TimeTableMapper;
 import lombok.AllArgsConstructor;
 import org.hibernate.sql.Update;
 import org.springframework.stereotype.Service;
+
+import java.sql.Time;
 
 
 @Service
@@ -20,13 +21,22 @@ public class ScheduleServiceImpl implements ScheduleService {
     private final UpdateScheduleUseCase updateScheduleUseCase;
     private final DeleteScheduleUseCase deleteScheduleUseCase;
 
+    private final GetTimeTableUseCase getTimeTableUseCase;
+
     private final ScheduleMapper scheduleMapper;
+    private final TimeTableMapper timeTableMapper;
 
     @Override
     public GetScheduleResponse getScheduleService() {
         Iterable<Schedule> schedules = getScheduleUseCase.run();
         GetScheduleResponse.Builder response = scheduleMapper.getScheduleMapper(schedules);
         return response.build();
+    }
+
+    @Override
+    public GetTimeTableResponse getTimeTableService(GetTimeTableRequest request) {
+        TimeTable timetable= getTimeTableUseCase.run(request.getUuid());
+        return timeTableMapper.getScheduleMapper(timetable).build();
     }
 
     @Override

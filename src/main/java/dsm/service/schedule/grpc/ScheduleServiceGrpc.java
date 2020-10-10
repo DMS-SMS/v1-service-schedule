@@ -35,4 +35,10 @@ public class ScheduleServiceGrpc extends ScheduleServiceImplBase {
         responseObserver.onNext(scheduleService.deleteScheduleService(request));
         responseObserver.onCompleted();
     }
+
+    @Override
+    public void getTimeTable(GetTimeTableRequest request, StreamObserver<GetTimeTableResponse> responseObserver) {
+        responseObserver.onNext(scheduleService.getTimeTableService(request));
+        responseObserver.onCompleted();
+    }
 }

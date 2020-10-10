@@ -12,6 +12,6 @@ public interface TimeTableRepository extends CrudRepository<TimeTable, String> {
     @Override
     Optional<TimeTable> findById(String s);
 
-    Optional<TimeTable> findByTarget_gradeAndTarget_groupAndWeek(
+    Optional<TimeTable> findByTargetGradeAndTargetGroupAndWeek(
             Integer targetGrade, Integer targetGroup, Integer week);
 }

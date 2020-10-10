@@ -25,7 +25,7 @@ public class GetTimeTableUseCaseImpl implements GetTimeTableUseCase {
         Account student = studentRepository.findById(uuid)
                 .orElseThrow(UnauthorizedException::new);
 
-        return timeTableRepository.findByTarget_gradeAndTarget_groupAndWeek(
+        return timeTableRepository.findByTargetGradeAndTargetGroupAndWeek(
                 student.getGrade(),
                 student.getGroup(),
                 timeService.getWeekNumber()

@@ -18,11 +18,12 @@ public class AuthHandler {
     private String spanContext = "1:1:0:0";
     private ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port)
             .usePlaintext().build();
-    private Metadata metadata = new Metadata();
 
     public GetTeacherInformWithUUIDResponse getTeacherInform(
             GetTeacherInformWithUUIDRequest request
     ) {
+        Metadata metadata = new Metadata();
+
         AuthTeacherGrpc.AuthTeacherBlockingStub authTeacherStub = AuthTeacherGrpc.newBlockingStub(channel);
 
         metadata.put(Metadata.Key.of("x-request-id", Metadata.ASCII_STRING_MARSHALLER), xRequestId);
@@ -34,6 +35,8 @@ public class AuthHandler {
     public GetStudentInformWithUUIDResponse getStudentInform(
             GetStudentInformWithUUIDRequest request
     ) {
+        Metadata metadata = new Metadata();
+
         AuthStudentGrpc.AuthStudentBlockingStub authStudentStub = AuthStudentGrpc.newBlockingStub(channel);
 
         metadata.put(Metadata.Key.of("x-request-id", Metadata.ASCII_STRING_MARSHALLER), xRequestId);

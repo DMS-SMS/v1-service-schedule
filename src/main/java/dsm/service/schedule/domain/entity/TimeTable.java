@@ -17,10 +17,10 @@ public class TimeTable {
     private String uuid;
 
     @Column(nullable = false)
-    private Integer target_grade;
+    private Integer targetGrade;
 
     @Column(nullable = false)
-    private Integer target_group;
+    private Integer targetGroup;
 
     @Column(nullable = false)
     private Integer week;

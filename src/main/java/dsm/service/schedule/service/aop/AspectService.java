@@ -5,6 +5,7 @@ import dsm.service.schedule.infra.openTracing.JaegerHandler;
 import dsm.service.schedule.proto.DefaultScheduleResponse;
 import dsm.service.schedule.proto.GetScheduleResponse;
 import dsm.service.schedule.proto.GetTimeTableResponse;
+import dsm.service.schedule.service.aop.annotation.Tracing;
 import lombok.AllArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -68,5 +69,10 @@ public class AspectService {
                     .setMsg(businessException.getMessage())
                     .build();
         }
+    }
+
+    @Around("@annotation(dsm.service.schedule.service.aop.annotation.Tracing) && @annotation(tracing)")
+    public Object extensionTracing(ProceedingJoinPoint pjp, Tracing tracing) throws Throwable {
+        return jaegerHandler.extensionTracing(pjp, tracing.serviceName());
     }
 }

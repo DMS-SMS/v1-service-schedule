@@ -29,6 +29,7 @@ dependencies {
     implementation 'io.github.lognet:grpc-spring-boot-starter:4.0.0'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'io.jaegertracing:jaeger-client:1.4.0'
     implementation 'com.orbitz.consul:consul-client:1.4.0'
     implementation 'mysql:mysql-connector-java:8.0.21'
     implementation 'org.projectlombok:lombok'

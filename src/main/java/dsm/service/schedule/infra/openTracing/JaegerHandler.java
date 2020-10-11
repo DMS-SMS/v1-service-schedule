@@ -1,6 +1,7 @@
 package dsm.service.schedule.infra.openTracing;
 
 import ch.qos.logback.classic.spi.IThrowableProxy;
+import dsm.service.schedule.service.aop.annotation.Tracing;
 import io.jaegertracing.Configuration;
 import io.jaegertracing.internal.JaegerSpanContext;
 import io.jaegertracing.internal.JaegerTracer;
@@ -27,6 +28,7 @@ public class JaegerHandler {
             .withParam(1).withType("const");
     private Tracer tracer = Configuration.fromEnv("ScheduleService").withSampler(samplerConfiguration).getTracer();
 
+
     public Object serviceTracing(ProceedingJoinPoint pjp) throws Throwable {
         String spanContext = (String) pjp.getArgs()[2];
         String xRequestId = (String) pjp.getArgs()[1];
@@ -43,9 +45,38 @@ public class JaegerHandler {
         return service;
     }
 
+    public Object extensionTracing(ProceedingJoinPoint pjp, String serviceName) throws Throwable {
+        Span span = tracer.buildSpan(serviceName).asChildOf(
+                tracer.activeSpan()
+        ).start();
+
+        Object service = new Object();
+
+        try (Scope scope = tracer.scopeManager().activate(span)) {
+            service = pjp.proceed();
+        } finally {
+            span.finish();
+        }
+        return service;
+
+    }
+
+    public void tracingStart(String serviceName) {
+        Span span1 = tracer.activeSpan();
+        Span span = tracer.buildSpan(serviceName).asChildOf(
+                tracer.activeSpan()
+        ).start();
+
+        tracer.scopeManager().activate(span);
+    }
+
+    public void tracingEnd() {
+        Span span = tracer.activeSpan();
+        span.finish();
+    }
+
     private SpanContext generateSpanContext(String spanContext) {
         String[] splitSpanContext = spanContext.split(":");
-        System.out.println(Long.parseUnsignedLong(splitSpanContext[0], 16));
         Long traceIdLow = Long.parseUnsignedLong(splitSpanContext[0], 16);
         Long spanId = Long.parseUnsignedLong(splitSpanContext[1], 16);
         Long parentId = Long.parseUnsignedLong(splitSpanContext[2], 16);

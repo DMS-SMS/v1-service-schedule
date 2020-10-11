@@ -2,9 +2,13 @@ package dsm.service.schedule.infra.consul;
 
 import com.orbitz.consul.AgentClient;
 import com.orbitz.consul.Consul;
+import com.orbitz.consul.KeyValueClient;
 import com.orbitz.consul.NotRegisteredException;
 import com.orbitz.consul.model.agent.ImmutableRegistration;
 import com.orbitz.consul.model.agent.Registration;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -15,6 +19,7 @@ public class ConsulHandler {
     private String serviceId = "DMS.SMS.v1.service.schedule";
     private Consul client = Consul.builder().withUrl("http://127.0.0.1:8500").build();
     private AgentClient agentClient = client.agentClient();
+    private KeyValueClient keyValueClient = client.keyValueClient();
 
     public void registerConsul() throws NotRegisteredException {
         ImmutableRegistration service = ImmutableRegistration.builder()
@@ -32,5 +37,15 @@ public class ConsulHandler {
 
     public void deregisterConsul() {
         agentClient.deregister(serviceId);
+    }
+
+    public JSONObject getValue(String key){
+        JSONParser parser = new JSONParser();
+        String value = keyValueClient.getValueAsString(key).orElse("{}");
+        try {
+            return (JSONObject) parser.parse(value);
+        } catch (Exception e) {
+            return new JSONObject();
+        }
     }
 }

@@ -1,6 +1,7 @@
 package dsm.service.schedule.infra.auth;
 
 import dsm.service.schedule.proto.*;
+import dsm.service.schedule.service.aop.annotation.Tracing;
 import io.grpc.ClientInterceptors;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -19,6 +20,7 @@ public class AuthHandler {
     private ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port)
             .usePlaintext().build();
 
+    @Tracing(serviceName = "AuthConnection")
     public GetTeacherInformWithUUIDResponse getTeacherInform(
             GetTeacherInformWithUUIDRequest request
     ) {
@@ -32,6 +34,7 @@ public class AuthHandler {
         return MetadataUtils.attachHeaders(authTeacherStub, metadata).getTeacherInformWithUUID(request);
     }
 
+    @Tracing(serviceName = "AuthConnection")
     public GetStudentInformWithUUIDResponse getStudentInform(
             GetStudentInformWithUUIDRequest request
     ) {

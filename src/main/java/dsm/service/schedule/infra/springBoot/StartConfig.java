@@ -1,6 +1,7 @@
-package dsm.service.schedule.infra.consul;
+package dsm.service.schedule.infra.springBoot;
 
 import com.orbitz.consul.NotRegisteredException;
+import dsm.service.schedule.infra.consul.ConsulHandler;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

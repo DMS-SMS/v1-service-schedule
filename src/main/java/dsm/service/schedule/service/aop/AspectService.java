@@ -60,7 +60,7 @@ public class AspectService {
     @Around("defaultSchedulePointCut()")
     public Object defaultErrorHandling(ProceedingJoinPoint pjp) throws Throwable {
         try {
-            return pjp.proceed();
+            return jaegerHandler.serviceTracing(pjp);
         } catch (BusinessException businessException) {
             return DefaultScheduleResponse.newBuilder()
                     .setStatus(businessException.getStatusCode())

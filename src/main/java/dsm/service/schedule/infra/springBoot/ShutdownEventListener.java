@@ -1,5 +1,6 @@
-package dsm.service.schedule.infra.consul;
+package dsm.service.schedule.infra.springBoot;
 
+import dsm.service.schedule.infra.consul.ConsulHandler;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.origin.SystemEnvironmentOrigin;
 import org.springframework.context.ApplicationEvent;

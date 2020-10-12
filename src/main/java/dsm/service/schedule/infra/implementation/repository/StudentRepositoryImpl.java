@@ -18,10 +18,11 @@ public class StudentRepositoryImpl implements StudentRepository {
     private final AuthHandler authHandler;
 
     @Override
-    public Optional<Account> findById(String uuid) {
+    public Optional<Account> findById(String uuid, String xRequestId) {
         try {
             return authMapper.authGetStudentInformResponseMapper(
-                    authHandler.getStudentInform(authMapper.authGetStudentInformRequestMapper(uuid))
+                    authHandler.getStudentInform(
+                            authMapper.authGetStudentInformRequestMapper(uuid), xRequestId)
             );
         } catch (Exception ignored) {
             return Optional.empty();

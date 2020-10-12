@@ -1,5 +1,7 @@
 package dsm.service.schedule.infra.auth;
 
+import dsm.service.schedule.infra.consul.ConsulHandler;
+import dsm.service.schedule.infra.openTracing.JaegerHandler;
 import dsm.service.schedule.proto.*;
 import dsm.service.schedule.service.aop.annotation.Tracing;
 import io.grpc.ClientInterceptors;
@@ -9,24 +11,30 @@ import io.grpc.Metadata;
 import io.grpc.stub.MetadataUtils;
 import io.grpc.stub.StreamObserver;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class AuthHandler {
-    private String host = "127.0.0.1";
-    private Integer port = 10071;
-    private String xRequestId = "f9ed4675f1c53513c61a3b3b4e25b4c0";
-    private String spanContext = "1:1:0:0";
-    private ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port)
-            .usePlaintext().build();
+    private final JaegerHandler jaegerHandler;
+    private final ConsulHandler consulHandler;
+
+    private String serviceName = "DMS.SMS.v1.service.auth";
 
     @Tracing(serviceName = "AuthConnection")
     public GetTeacherInformWithUUIDResponse getTeacherInform(
-            GetTeacherInformWithUUIDRequest request
+            GetTeacherInformWithUUIDRequest request,
+            String xRequestId
     ) {
-        Metadata metadata = new Metadata();
+        String host = consulHandler.getServiceHost(serviceName);
+        Integer port = consulHandler.getServicePort(serviceName);
 
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
         AuthTeacherGrpc.AuthTeacherBlockingStub authTeacherStub = AuthTeacherGrpc.newBlockingStub(channel);
+
+        Metadata metadata = new Metadata();
+        String spanContext = jaegerHandler.getActiveSpanContext();
 
         metadata.put(Metadata.Key.of("x-request-id", Metadata.ASCII_STRING_MARSHALLER), xRequestId);
         metadata.put(Metadata.Key.of("span-context", Metadata.ASCII_STRING_MARSHALLER), spanContext);
@@ -36,11 +44,17 @@ public class AuthHandler {
 
     @Tracing(serviceName = "AuthConnection")
     public GetStudentInformWithUUIDResponse getStudentInform(
-            GetStudentInformWithUUIDRequest request
+            GetStudentInformWithUUIDRequest request,
+            String xRequestId
     ) {
-        Metadata metadata = new Metadata();
+        String host = consulHandler.getServiceHost(serviceName);
+        Integer port = consulHandler.getServicePort(serviceName);
 
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
         AuthStudentGrpc.AuthStudentBlockingStub authStudentStub = AuthStudentGrpc.newBlockingStub(channel);
+
+        Metadata metadata = new Metadata();
+        String spanContext = jaegerHandler.getActiveSpanContext();
 
         metadata.put(Metadata.Key.of("x-request-id", Metadata.ASCII_STRING_MARSHALLER), xRequestId);
         metadata.put(Metadata.Key.of("span-context", Metadata.ASCII_STRING_MARSHALLER), spanContext);

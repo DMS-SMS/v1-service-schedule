@@ -6,13 +6,14 @@ import com.orbitz.consul.KeyValueClient;
 import com.orbitz.consul.NotRegisteredException;
 import com.orbitz.consul.model.agent.ImmutableRegistration;
 import com.orbitz.consul.model.agent.Registration;
+import com.orbitz.consul.model.health.Service;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
 import java.util.Collections;
+import java.util.Map;
+import java.util.Objects;
 
 @Component
 public class ConsulHandler {
@@ -47,5 +48,23 @@ public class ConsulHandler {
         } catch (Exception e) {
             return new JSONObject();
         }
+    }
+
+    public String getServiceHost(String serviceName) {
+        return Objects.requireNonNull(getService(serviceName)).getAddress();
+    }
+
+    public Integer getServicePort(String serviceName) {
+        return Objects.requireNonNull(getService(serviceName)).getPort();
+    }
+
+    private Service getService(String serviceName) {
+        for(Map.Entry<String, Service> elem:agentClient.getServices().entrySet()) {
+            if(elem.getValue().getService().equals(serviceName)) {
+                if(agentClient.getChecks().get("service:"+elem.getValue().getId()).getStatus().equals("passing"))
+                    return elem.getValue();
+            }
+        }
+        return null;
     }
 }

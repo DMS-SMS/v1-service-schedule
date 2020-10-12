@@ -19,10 +19,11 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     private final AuthMapper authMapper;
 
     @Override
-    public Optional<Account> findById(String uuid) {
+    public Optional<Account> findById(String uuid, String xRequest) {
         try {
             return authMapper.authGetTeacherInformResponseMapper(
-                    authHandler.getTeacherInform(authMapper.authGetTeacherInformRequestMapper(uuid))
+                    authHandler.getTeacherInform(
+                            authMapper.authGetTeacherInformRequestMapper(uuid), xRequest)
             );
         } catch (Exception ignored) {
             return Optional.empty();

@@ -35,13 +35,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public GetTimeTableResponse getTimeTableService(GetTimeTableRequest request, String xRequestId, String spanContext) {
-        TimeTable timetable= getTimeTableUseCase.run(request.getUuid());
+        TimeTable timetable= getTimeTableUseCase.run(request.getUuid(), xRequestId);
         return timeTableMapper.getScheduleMapper(timetable).build();
     }
 
     @Override
     public DefaultScheduleResponse createScheduleService(CreateScheduleRequest request, String xRequestId, String spanContext) {
-        createScheduleUseCase.run(request.getUuid(), request.getDetail(), request.getStartDate(), request.getEndDate());
+        createScheduleUseCase.run(
+                request.getUuid(), xRequestId, request.getDetail(), request.getStartDate(), request.getEndDate());
         return DefaultScheduleResponse.newBuilder().setStatus(201).build();
     }
 
@@ -49,6 +50,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     public DefaultScheduleResponse updateScheduleService(UpdateScheduleRequest request, String xRequestId, String spanContext) {
         updateScheduleUseCase.run(
                 request.getUuid(),
+                xRequestId,
                 request.getScheduleUUID(),
                 request.getDetail(),
                 request.getStartDate(),
@@ -59,7 +61,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public DefaultScheduleResponse deleteScheduleService(DeleteScheduleRequest request, String xRequestId, String spanContext) {
-        deleteScheduleUseCase.run(request.getUuid(), request.getScheduleUUID());
+        deleteScheduleUseCase.run(request.getUuid(), xRequestId, request.getScheduleUUID());
         return DefaultScheduleResponse.newBuilder().setStatus(200).build();
     }
 }

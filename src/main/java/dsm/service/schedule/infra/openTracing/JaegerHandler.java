@@ -75,6 +75,10 @@ public class JaegerHandler {
         span.finish();
     }
 
+    public String getActiveSpanContext() {
+        return tracer.activeSpan().context().toString();
+    }
+
     private SpanContext generateSpanContext(String spanContext) {
         String[] splitSpanContext = spanContext.split(":");
         Long traceIdLow = Long.parseUnsignedLong(splitSpanContext[0], 16);

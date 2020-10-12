@@ -1,0 +1,25 @@
+name: docker-build
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  DOCKER_BUILD_PUSH:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: build java
+        run: |
+          chmod +777 gradlew
+          ./gradlew build
+      - name: build docker image
+        run: docker build -t migsking/v1_dsm_service_schedule .
+
+      - name: publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: migsking/fitness
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}

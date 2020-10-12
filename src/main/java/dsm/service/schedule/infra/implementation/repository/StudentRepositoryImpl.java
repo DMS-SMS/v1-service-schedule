@@ -1,10 +1,9 @@
 package dsm.service.schedule.infra.implementation.repository;
 
 import dsm.service.schedule.domain.entity.Account;
-import dsm.service.schedule.domain.repository.TeacherRepository;
+import dsm.service.schedule.domain.repository.StudentRepository;
 import dsm.service.schedule.infra.auth.AuthHandler;
 import dsm.service.schedule.infra.auth.mapper.AuthMapper;
-import dsm.service.schedule.proto.GetTeacherInformWithUUIDResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -13,17 +12,17 @@ import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
-public class TeacherRepositoryImpl implements TeacherRepository {
-    private final AuthHandler authHandler;
-
+public class StudentRepositoryImpl implements StudentRepository {
     private final AuthMapper authMapper;
 
+    private final AuthHandler authHandler;
+
     @Override
-    public Optional<Account> findById(String uuid, String xRequest) {
+    public Optional<Account> findById(String uuid, String xRequestId) {
         try {
-            return authMapper.authGetTeacherInformResponseMapper(
-                    authHandler.getTeacherInform(
-                            authMapper.authGetTeacherInformRequestMapper(uuid), xRequest)
+            return authMapper.authGetStudentInformResponseMapper(
+                    authHandler.getStudentInform(
+                            authMapper.authGetStudentInformRequestMapper(uuid), xRequestId)
             );
         } catch (Exception ignored) {
             return Optional.empty();

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-@EnableJpaRepositories
 public interface ScheduleRepository extends CrudRepository<Schedule, String> {
     @Override
     Iterable<Schedule> findAll();

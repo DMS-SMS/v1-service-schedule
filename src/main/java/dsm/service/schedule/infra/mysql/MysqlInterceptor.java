@@ -20,13 +20,22 @@ public class MysqlInterceptor extends EmptyInterceptor {
     @Override
     public void beforeTransactionCompletion(Transaction tx) {
         jaegerHandler = (JaegerHandler) BeanUtils.getBean("jaegerHandler");
-        jaegerHandler.tracingEnd();
+        jaegerHandler.tracingStart("SQL (Transaction)");
         super.beforeTransactionCompletion(tx);
     }
 
     @Override
-    public void afterTransactionBegin(Transaction tx) {
+    public void afterTransactionCompletion(Transaction tx) {
         jaegerHandler = (JaegerHandler) BeanUtils.getBean("jaegerHandler");
-        jaegerHandler.tracingStart("SQL");
+        jaegerHandler.tracingEnd();
+        super.afterTransactionCompletion(tx);
+    }
+
+    @Override
+    public boolean onLoad(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
+        jaegerHandler = (JaegerHandler) BeanUtils.getBean("jaegerHandler");
+        jaegerHandler.tracingStart("SQL (Select)");
+        jaegerHandler.tracingEnd();
+        return super.onLoad(entity, id, state, propertyNames, types);
     }
 }

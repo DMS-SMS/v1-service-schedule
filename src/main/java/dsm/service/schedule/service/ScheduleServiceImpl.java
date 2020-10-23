@@ -27,30 +27,29 @@ public class ScheduleServiceImpl implements ScheduleService {
     private final TimeTableMapper timeTableMapper;
 
     @Override
-    public GetScheduleResponse getScheduleService(GetScheduleRequest request, String xRequestId, String spanContext) {
+    public GetScheduleResponse getScheduleService(GetScheduleRequest request) {
         Iterable<Schedule> schedules = getScheduleUseCase.run();
         GetScheduleResponse.Builder response = scheduleMapper.getScheduleMapper(schedules);
         return response.build();
     }
 
     @Override
-    public GetTimeTableResponse getTimeTableService(GetTimeTableRequest request, String xRequestId, String spanContext) {
-        TimeTable timetable= getTimeTableUseCase.run(request.getUuid(), xRequestId);
+    public GetTimeTableResponse getTimeTableService(GetTimeTableRequest request) {
+        TimeTable timetable= getTimeTableUseCase.run(request.getUuid());
         return timeTableMapper.getScheduleMapper(timetable).build();
     }
 
     @Override
-    public DefaultScheduleResponse createScheduleService(CreateScheduleRequest request, String xRequestId, String spanContext) {
+    public DefaultScheduleResponse createScheduleService(CreateScheduleRequest request) {
         createScheduleUseCase.run(
-                request.getUuid(), xRequestId, request.getDetail(), request.getStartDate(), request.getEndDate());
+                request.getUuid(), request.getDetail(), request.getStartDate(), request.getEndDate());
         return DefaultScheduleResponse.newBuilder().setStatus(201).build();
     }
 
     @Override
-    public DefaultScheduleResponse updateScheduleService(UpdateScheduleRequest request, String xRequestId, String spanContext) {
+    public DefaultScheduleResponse updateScheduleService(UpdateScheduleRequest request) {
         updateScheduleUseCase.run(
                 request.getUuid(),
-                xRequestId,
                 request.getScheduleUUID(),
                 request.getDetail(),
                 request.getStartDate(),
@@ -60,8 +59,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public DefaultScheduleResponse deleteScheduleService(DeleteScheduleRequest request, String xRequestId, String spanContext) {
-        deleteScheduleUseCase.run(request.getUuid(), xRequestId, request.getScheduleUUID());
+    public DefaultScheduleResponse deleteScheduleService(DeleteScheduleRequest request) {
+        deleteScheduleUseCase.run(request.getUuid(), request.getScheduleUUID());
         return DefaultScheduleResponse.newBuilder().setStatus(200).build();
     }
 }

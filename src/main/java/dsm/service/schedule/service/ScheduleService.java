@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface ScheduleService {
-    public GetScheduleResponse getScheduleService(GetScheduleRequest request, String xRequestId, String spanContext);
+    public GetScheduleResponse getScheduleService(GetScheduleRequest request);
 
-    public GetTimeTableResponse getTimeTableService(GetTimeTableRequest request, String xRequestId, String spanContext);
+    public GetTimeTableResponse getTimeTableService(GetTimeTableRequest request);
 
-    public DefaultScheduleResponse createScheduleService(CreateScheduleRequest request, String xRequestId, String spanContext);
+    public DefaultScheduleResponse createScheduleService(CreateScheduleRequest request);
 
-    public DefaultScheduleResponse updateScheduleService(UpdateScheduleRequest request, String xRequestId, String spanContext);
+    public DefaultScheduleResponse updateScheduleService(UpdateScheduleRequest request);
 
-    public DefaultScheduleResponse deleteScheduleService(DeleteScheduleRequest request, String xRequestId, String spanContext);
+    public DefaultScheduleResponse deleteScheduleService(DeleteScheduleRequest request);
 }

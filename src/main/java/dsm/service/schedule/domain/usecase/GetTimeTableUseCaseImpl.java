@@ -21,8 +21,8 @@ public class GetTimeTableUseCaseImpl implements GetTimeTableUseCase {
     private final TimeService timeService;
 
     @Override
-    public TimeTable run(String uuid, String xRequestId) {
-        Account student = studentRepository.findById(uuid, xRequestId)
+    public TimeTable run(String uuid) {
+        Account student = studentRepository.findById(uuid)
                 .orElseThrow(UnauthorizedException::new);
 
         return timeTableRepository.findByTargetGradeAndTargetGroupAndWeek(

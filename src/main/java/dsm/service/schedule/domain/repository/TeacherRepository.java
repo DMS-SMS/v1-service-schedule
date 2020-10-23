@@ -7,5 +7,5 @@ import java.util.Optional;
 
 
 public interface TeacherRepository {
-    Optional<Account> findById(String uuid, String xRequest);
+    Optional<Account> findById(String uuid);
 }

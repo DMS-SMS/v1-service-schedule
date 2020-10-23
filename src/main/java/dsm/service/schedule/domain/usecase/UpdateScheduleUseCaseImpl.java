@@ -20,9 +20,9 @@ public class UpdateScheduleUseCaseImpl implements UpdateScheduleUseCase {
 
     @Override
     public void run(
-            String teacherUuid, String xRequestId, String scheduleUuid, String detail, Long startTime, Long endTime
+            String teacherUuid, String scheduleUuid, String detail, Long startTime, Long endTime
     ) {
-        Account account = teacherRepository.findById(teacherUuid, xRequestId)
+        Account account = teacherRepository.findById(teacherUuid)
                 .orElseThrow(UnauthorizedException::new);
 
 

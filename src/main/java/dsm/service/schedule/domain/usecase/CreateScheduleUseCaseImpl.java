@@ -23,9 +23,9 @@ public class CreateScheduleUseCaseImpl implements CreateScheduleUseCase {
 
     @Override
     public void run(
-            String teacherUuid, String xRequestId, String detail, Long startTime, Long endTime
+            String teacherUuid, String detail, Long startTime, Long endTime
     ) {
-        Account account = teacherRepository.findById(teacherUuid, xRequestId)
+        Account account = teacherRepository.findById(teacherUuid)
                 .orElseThrow(UnauthorizedException::new);
 
 

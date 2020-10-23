@@ -1,5 +1,6 @@
 package dsm.service.schedule.infra.auth;
 
+import dsm.service.schedule.grpc.MetadataInterceptor;
 import dsm.service.schedule.infra.consul.ConsulHandler;
 import dsm.service.schedule.infra.openTracing.JaegerHandler;
 import dsm.service.schedule.proto.*;
@@ -24,8 +25,7 @@ public class AuthHandler {
 
     @Tracing(serviceName = "AuthConnection")
     public GetTeacherInformWithUUIDResponse getTeacherInform(
-            GetTeacherInformWithUUIDRequest request,
-            String xRequestId
+            GetTeacherInformWithUUIDRequest request
     ) {
         String host = consulHandler.getServiceHost(serviceName);
         Integer port = consulHandler.getServicePort(serviceName);
@@ -34,6 +34,7 @@ public class AuthHandler {
         AuthTeacherGrpc.AuthTeacherBlockingStub authTeacherStub = AuthTeacherGrpc.newBlockingStub(channel);
 
         Metadata metadata = new Metadata();
+        String xRequestId = (String) MetadataInterceptor.xRequestId.get();
         String spanContext = jaegerHandler.getActiveSpanContext();
 
         metadata.put(Metadata.Key.of("x-request-id", Metadata.ASCII_STRING_MARSHALLER), xRequestId);
@@ -44,8 +45,7 @@ public class AuthHandler {
 
     @Tracing(serviceName = "AuthConnection")
     public GetStudentInformWithUUIDResponse getStudentInform(
-            GetStudentInformWithUUIDRequest request,
-            String xRequestId
+            GetStudentInformWithUUIDRequest request
     ) {
         String host = consulHandler.getServiceHost(serviceName);
         Integer port = consulHandler.getServicePort(serviceName);
@@ -54,6 +54,7 @@ public class AuthHandler {
         AuthStudentGrpc.AuthStudentBlockingStub authStudentStub = AuthStudentGrpc.newBlockingStub(channel);
 
         Metadata metadata = new Metadata();
+        String xRequestId = (String) MetadataInterceptor.xRequestId.get();
         String spanContext = jaegerHandler.getActiveSpanContext();
 
         metadata.put(Metadata.Key.of("x-request-id", Metadata.ASCII_STRING_MARSHALLER), xRequestId);

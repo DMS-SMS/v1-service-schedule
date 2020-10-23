@@ -1,6 +1,7 @@
 package dsm.service.schedule.infra.openTracing;
 
 import ch.qos.logback.classic.spi.IThrowableProxy;
+import dsm.service.schedule.grpc.MetadataInterceptor;
 import dsm.service.schedule.service.aop.annotation.Tracing;
 import io.jaegertracing.Configuration;
 import io.jaegertracing.internal.JaegerSpanContext;
@@ -30,8 +31,8 @@ public class JaegerHandler {
 
 
     public Object serviceTracing(ProceedingJoinPoint pjp) throws Throwable {
-        String spanContext = (String) pjp.getArgs()[2];
-        String xRequestId = (String) pjp.getArgs()[1];
+        String spanContext = (String) MetadataInterceptor.spanContext.get();
+        String xRequestId = (String) MetadataInterceptor.xRequestId.get();
 
         Span span = tracer.buildSpan("service").asChildOf(generateSpanContext(spanContext)).start();
 
@@ -81,9 +82,9 @@ public class JaegerHandler {
 
     private SpanContext generateSpanContext(String spanContext) {
         String[] splitSpanContext = spanContext.split(":");
-        Long traceIdLow = Long.parseUnsignedLong(splitSpanContext[0], 16);
-        Long spanId = Long.parseUnsignedLong(splitSpanContext[1], 16);
-        Long parentId = Long.parseUnsignedLong(splitSpanContext[2], 16);
+        long traceIdLow = Long.parseUnsignedLong(splitSpanContext[0], 16);
+        long spanId = Long.parseUnsignedLong(splitSpanContext[1], 16);
+        long parentId = Long.parseUnsignedLong(splitSpanContext[2], 16);
         Byte flags = Byte.valueOf(splitSpanContext[3], 16);
 
 

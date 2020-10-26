@@ -10,7 +10,7 @@ ext {
 }
 
 group = 'dsm.service'
-version = '0.0.1-SNAPSHOT'
+version = '0.8'
 sourceCompatibility = '1.8'
 
 configurations {

@@ -27,7 +27,7 @@ import java.util.Map;
 public class JaegerHandler {
     private Configuration.SamplerConfiguration samplerConfiguration = Configuration.SamplerConfiguration.fromEnv()
             .withParam(1).withType("const");
-    private Tracer tracer = Configuration.fromEnv("ScheduleService").withSampler(samplerConfiguration).getTracer();
+    private Tracer tracer = Configuration.fromEnv("DMS.SMS.v1.service.schedule").withSampler(samplerConfiguration).getTracer();
 
 
     public Object serviceTracing(ProceedingJoinPoint pjp) throws Throwable {

@@ -21,14 +21,16 @@ public class GetTimeTableUseCaseImpl implements GetTimeTableUseCase {
     private final TimeService timeService;
 
     @Override
-    public TimeTable run(String uuid) {
+    public TimeTable run(String uuid, Integer weekNumber) {
         Account student = studentRepository.findById(uuid)
                 .orElseThrow(UnauthorizedException::new);
+
+        if (weekNumber == 0) { weekNumber = timeService.getWeekNumber(); }
 
         return timeTableRepository.findByTargetGradeAndTargetGroupAndWeek(
                 student.getGrade(),
                 student.getGroup(),
-                timeService.getWeekNumber()
+                weekNumber
         ).orElseThrow(NotFoundException::new);
     }
 }

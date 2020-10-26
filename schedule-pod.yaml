@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dms-sms-service-schedule
+  labels:
+    app: dms-sms-service-schedule
+spec:
+  containers:
+    - image: migsking/dms-sms-service-schedule:latest
+      name: dms-sms-service-schedule
+      env:
+        - name: DB_PASSWORD
+          value: ${DB_PASSWORD}
+        - name: CONSUL_ADDR
+          value: ${CONSUL_ADDRESS}
+        - name: JAEGER_AGENT_HOST
+          value: ${JAEGER_HOST}
+        - name: JAEGER_AGENT_PORT
+          value: ${JAEGER_PORT}

@@ -29,7 +29,7 @@ public class MysqlConfigure {
         dataSourceBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
         dataSourceBuilder.url((String) consulV.get("url"));
         dataSourceBuilder.username((String) consulV.get("username"));
-        dataSourceBuilder.password("mingi0130");
+        dataSourceBuilder.password(System.getenv("DB_PASSWORD"));
         return dataSourceBuilder.build();
     }
 

@@ -8,13 +8,14 @@ import dsm.service.schedule.domain.repository.ScheduleRepository;
 import dsm.service.schedule.domain.repository.TeacherRepository;
 import dsm.service.schedule.domain.service.UuidService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CreateScheduleUseCaseImpl implements CreateScheduleUseCase {
     final private ScheduleRepository scheduleRepository;
     final private TeacherRepository teacherRepository;
@@ -27,7 +28,6 @@ public class CreateScheduleUseCaseImpl implements CreateScheduleUseCase {
     ) {
         Account account = teacherRepository.findById(teacherUuid)
                 .orElseThrow(UnauthorizedException::new);
-
 
         scheduleRepository.save(
                 Schedule.builder()

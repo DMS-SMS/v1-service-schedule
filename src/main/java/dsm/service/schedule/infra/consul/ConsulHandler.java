@@ -12,6 +12,9 @@ import org.json.simple.parser.JSONParser;
 import org.lognet.springboot.grpc.context.LocalRunningGrpcPort;
 import org.springframework.stereotype.Component;
 
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
@@ -25,11 +28,17 @@ public class ConsulHandler {
     private AgentClient agentClient = client.agentClient();
     private KeyValueClient keyValueClient = client.keyValueClient();
     @LocalRunningGrpcPort private Integer port;
+    private String address = InetAddress.getLocalHost().getHostAddress();
+
+    public ConsulHandler() throws UnknownHostException {
+    }
 
     public void registerConsul() throws NotRegisteredException {
+        System.out.println(address);
         ImmutableRegistration service = ImmutableRegistration.builder()
                 .id(serviceId)
                 .name("DMS.SMS.v1.service.schedule")
+                .address(address)
                 .port(port)
                 .check(Registration.RegCheck.ttl(1000000L))
                 .tags(Collections.singletonList("schedule"))

@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: service-schedule
+  name: service-schedule
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: service-schedule
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/dms-sms-local: "true"
+        io.kompose.service: service-schedule
+    spec:
+      containers:
+        - env:
+            - name: CONSUL_ADDR
+              value: "$CONSUL_ADDR"
+            - name: DB_PASSWORD
+              value: "$DB_PASSWORD"
+            - name: JAEGER_AGENT_HOST
+              value: "$JAEGER_AGENT_HOST"
+            - name: JAEGER_AGENT_PORT
+              value: "$JAEGER_AGENT_PORT"
+          image: 'migsking/dms-sms-service-schedule:$VERSION'
+          name: service-schedule
+          resources: {}
+      restartPolicy: Always
+status: {}

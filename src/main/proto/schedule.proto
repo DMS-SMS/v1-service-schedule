@@ -35,6 +35,7 @@ message GetTimeTableResponse {
 
 message GetScheduleRequest {
     string uuid = 1;
+    int32 month = 2;
 }
 
 message GetScheduleResponse {

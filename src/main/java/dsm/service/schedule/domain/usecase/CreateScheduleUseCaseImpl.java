@@ -23,20 +23,24 @@ public class CreateScheduleUseCaseImpl implements CreateScheduleUseCase {
     final private UuidService uuidService;
 
     @Override
-    public void run(
+    public String run(
             String teacherUuid, String detail, Long startTime, Long endTime
     ) {
         Account account = teacherRepository.findById(teacherUuid)
                 .orElseThrow(UnauthorizedException::new);
 
+        String schedule_uuid = uuidService.generateUuid();
+
         scheduleRepository.save(
                 Schedule.builder()
-                        .uuid(uuidService.generateUuid())
+                        .uuid(schedule_uuid)
                         .teacherUuid(teacherUuid)
                         .detail(detail)
                         .startDate(LocalDate.ofEpochDay(startTime))
                         .endDate(LocalDate.ofEpochDay(endTime))
                         .build()
         );
+
+        return schedule_uuid;
     }
 }

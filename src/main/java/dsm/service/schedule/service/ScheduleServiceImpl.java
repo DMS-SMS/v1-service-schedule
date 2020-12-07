@@ -41,9 +41,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public DefaultScheduleResponse createScheduleService(CreateScheduleRequest request) {
-        createScheduleUseCase.run(
+        String schedule_uuid = createScheduleUseCase.run(
                 request.getUuid(), request.getDetail(), request.getStartDate(), request.getEndDate());
-        return DefaultScheduleResponse.newBuilder().setStatus(201).build();
+        return DefaultScheduleResponse.newBuilder().setScheduleUUID(schedule_uuid).setStatus(201).build();
     }
 
     @Override
@@ -55,12 +55,12 @@ public class ScheduleServiceImpl implements ScheduleService {
                 request.getStartDate(),
                 request.getEndDate()
         );
-        return DefaultScheduleResponse.newBuilder().setStatus(200).build();
+        return DefaultScheduleResponse.newBuilder().setScheduleUUID(request.getScheduleUUID()).setStatus(200).build();
     }
 
     @Override
     public DefaultScheduleResponse deleteScheduleService(DeleteScheduleRequest request) {
         deleteScheduleUseCase.run(request.getUuid(), request.getScheduleUUID());
-        return DefaultScheduleResponse.newBuilder().setStatus(200).build();
+        return DefaultScheduleResponse.newBuilder().setScheduleUUID(request.getScheduleUUID()).setStatus(200).build();
     }
 }

@@ -28,7 +28,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public GetScheduleResponse getScheduleService(GetScheduleRequest request) {
-        Iterable<Schedule> schedules = getScheduleUseCase.run();
+        Iterable<Schedule> schedules = getScheduleUseCase.run(request.getYear(), request.getMonth());
         GetScheduleResponse.Builder response = scheduleMapper.getScheduleMapper(schedules);
         return response.build();
     }

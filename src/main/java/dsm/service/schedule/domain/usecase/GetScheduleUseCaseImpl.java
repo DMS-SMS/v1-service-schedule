@@ -17,8 +17,9 @@ public class GetScheduleUseCaseImpl implements GetScheduleUseCase{
     @Override
     public Iterable<Schedule> run(int year, int month) {
         String date = month+"/01/"+year;
-        int lastDayOfMonth = Integer.parseInt(String.valueOf(LocalDate.parse(date, DateTimeFormatter.ofPattern("M/dd/yyyy"))
-                .with(TemporalAdjusters.lastDayOfMonth())));
+        LocalDate LastLocalDateOfMonth = LocalDate.parse(date, DateTimeFormatter.ofPattern("M/dd/yyyy"))
+                .with(TemporalAdjusters.lastDayOfMonth());
+        int lastDayOfMonth = Integer.parseInt(String.valueOf(LastLocalDateOfMonth.getDayOfMonth()));
 
         return scheduleRepository.findAllByStartDateBetweenOrEndDateBetween(
                 LocalDate.of(year, month, 1),

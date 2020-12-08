@@ -5,10 +5,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
 public interface ScheduleRepository extends CrudRepository<Schedule, String> {
     @Override
     Iterable<Schedule> findAll();
+
+    Iterable<Schedule> findAllByStartDateBetweenOrEndDateBetween(LocalDate startDate, LocalDate startDate2, LocalDate endDate, LocalDate endDate2);
 }

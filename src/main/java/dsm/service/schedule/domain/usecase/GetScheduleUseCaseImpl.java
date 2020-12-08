@@ -16,7 +16,7 @@ public class GetScheduleUseCaseImpl implements GetScheduleUseCase{
 
     @Override
     public Iterable<Schedule> run(int year, int month) {
-        String date = month+"/"+year;
+        String date = month+"/01/"+year;
         int lastDayOfMonth = Integer.parseInt(String.valueOf(LocalDate.parse(date, DateTimeFormatter.ofPattern("M/dd/yyyy"))
                 .with(TemporalAdjusters.lastDayOfMonth())));
 

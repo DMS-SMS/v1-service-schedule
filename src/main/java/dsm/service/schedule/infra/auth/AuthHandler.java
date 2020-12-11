@@ -40,6 +40,7 @@ public class AuthHandler {
         metadata.put(Metadata.Key.of("x-request-id", Metadata.ASCII_STRING_MARSHALLER), xRequestId);
         metadata.put(Metadata.Key.of("span-context", Metadata.ASCII_STRING_MARSHALLER), spanContext);
 
+        channel.shutdown();
         return MetadataUtils.attachHeaders(authTeacherStub, metadata).getTeacherInformWithUUID(request);
     }
 
@@ -60,6 +61,7 @@ public class AuthHandler {
         metadata.put(Metadata.Key.of("x-request-id", Metadata.ASCII_STRING_MARSHALLER), xRequestId);
         metadata.put(Metadata.Key.of("span-context", Metadata.ASCII_STRING_MARSHALLER), spanContext);
 
+        channel.shutdown();
         return MetadataUtils.attachHeaders(authStudentStub, metadata).getStudentInformWithUUID(request);
     }
 }

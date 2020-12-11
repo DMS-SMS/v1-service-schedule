@@ -10,8 +10,12 @@ services:
       - CONSUL_ADDR=${CONSUL_ADDRESS}
       - JAEGER_AGENT_HOST=${JAEGER_HOST}
       - JAEGER_AGENT_PORT=${JAEGER_PORT}
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels: [APP=service-schedule]
 
 networks:
   dms-sms-local:
     name: dms-sms-local
-    driver: bridge
+    driver: overlay

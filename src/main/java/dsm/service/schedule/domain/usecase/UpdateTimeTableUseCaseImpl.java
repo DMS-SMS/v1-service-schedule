@@ -7,6 +7,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Map;
 
 @Component
@@ -17,15 +21,42 @@ public class UpdateTimeTableUseCaseImpl {
 
     @Scheduled(fixedDelay = 2147483647)
     public void execute() {
-        Map<Integer, String> timetableMap = schoolApiService.getTimeTable(2, 1, 2020, 12, 13);
-        TimeTable.TimeTableBuilder timeTableBuilder = TimeTable.builder().uuid("2020121421").day("20201214").targetGrade(2).targetGroup(1);
-        for (Integer key: timetableMap.keySet()) {
-            timeTableBuilder = putPeriod(timeTableBuilder, key, timetableMap.get(key));
+        LocalDateTime now = LocalDateTime.now();
+        String date = now.getMonthValue()+"/01/"+now.getYear();
+        LocalDate LastLocalDateOfMonth = LocalDate.parse(date, DateTimeFormatter.ofPattern("M/dd/yyyy"))
+                .with(TemporalAdjusters.lastDayOfMonth());
+        int lastDayOfMonth = Integer.parseInt(String.valueOf(LastLocalDateOfMonth.getDayOfMonth()));
+
+        for (int grade = 1; grade < 3; grade++) {
+            for (int group = 1; group < 4; group++) {
+                for (int day = 1; day < lastDayOfMonth; day++ ) {
+                    Map<Integer, String> timetableMap = schoolApiService.getTimeTable(
+                            grade, group, now.getYear(), now.getMonthValue(), day);
+
+                    TimeTable.TimeTableBuilder timeTableBuilder = TimeTable.builder()
+                            .uuid(
+                                    String.valueOf(now.getYear())+
+                                    String.valueOf(now.getMonthValue())+
+                                    String.valueOf(day)+
+                                    String.valueOf(grade)+
+                                    String.valueOf(group))
+                            .day(
+                                    String.valueOf(now.getYear())+
+                                    String.valueOf(now.getMonthValue())+
+                                    String.valueOf(day))
+                            .targetGrade(grade)
+                            .targetGroup(group);
+
+                    for (Integer key : timetableMap.keySet()) {
+                        timeTableBuilder = putPeriod(timeTableBuilder, key, timetableMap.get(key));
+                    }
+
+                    assert timeTableBuilder != null;
+                    timeTableRepository.save(timeTableBuilder.build());
+                }
+            }
         }
-        assert timeTableBuilder != null;
-        timeTableRepository.save(timeTableBuilder.build());
     }
-    // id 추가 및 스케줄링 안됨. 및 트레이싱 추가
     private TimeTable.TimeTableBuilder putPeriod(TimeTable.TimeTableBuilder timeTableBuilder, Integer time, String subject) {
         if (time == 1) {
             return timeTableBuilder.firstPeriod(subject);

@@ -47,7 +47,7 @@ public class SchoolApiServiceImpl implements SchoolApiService {
 
             return tableMap;
         } catch (Exception e) {
-            throw new ServerError(e.getMessage());
+            return new HashMap<Integer, String>();
         }
     }
 }

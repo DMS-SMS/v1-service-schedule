@@ -21,6 +21,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     private final UpdateScheduleUseCase updateScheduleUseCase;
     private final DeleteScheduleUseCase deleteScheduleUseCase;
 
+    private final UpdateTimeTableUseCaseImpl updateTimeTableUseCase;
     private final GetTimeTableUseCase getTimeTableUseCase;
 
     private final ScheduleMapper scheduleMapper;
@@ -35,6 +36,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public GetTimeTableResponse getTimeTableService(GetTimeTableRequest request) {
+        updateTimeTableUseCase.execute();
         TimeTable timetable= getTimeTableUseCase.execute(request.getUuid(), request.getWeekNumber());
         return timeTableMapper.getScheduleMapper(timetable).setStatus(200).build();
     }

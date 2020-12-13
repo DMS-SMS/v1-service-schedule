@@ -27,10 +27,10 @@ public class GetTimeTableUseCaseImpl implements GetTimeTableUseCase {
 
         if (weekNumber == 0) { weekNumber = timeService.getWeekNumber(); }
 
-        return timeTableRepository.findByTargetGradeAndTargetGroupAndWeek(
+        return timeTableRepository.findByTargetGradeAndTargetGroupAndDay(
                 student.getGrade(),
                 student.getGroup(),
-                weekNumber
+                "20201214"
         ).orElseThrow(NotFoundException::new);
     }
 }

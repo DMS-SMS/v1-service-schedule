@@ -22,7 +22,10 @@ public class GetScheduleUseCaseImpl implements GetScheduleUseCase{
                 .with(TemporalAdjusters.lastDayOfMonth());
         int lastDayOfMonth = Integer.parseInt(String.valueOf(LastLocalDateOfMonth.getDayOfMonth()));
 
-        throw new ServerError(date + lastDayOfMonth);
+        return scheduleRepository.findAllByStartDateBetween(
+                LocalDate.of(year, month, 1),
+                LocalDate.of(year, month, lastDayOfMonth)
+        );
 
 //        return scheduleRepository.findAllByStartDateBetweenOrEndDateBetween(
 //                LocalDate.of(year, month, 1),

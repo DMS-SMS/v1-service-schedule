@@ -18,14 +18,14 @@ public class UpdateTimeTableUseCaseImpl {
     @Scheduled(fixedDelay = 259200000)
     public void execute() {
         Map<Integer, String> timetableMap = schoolApiService.getTimeTable(2, 1, 2020, 11, 14);
-        TimeTable.TimeTableBuilder timeTableBuilder = TimeTable.builder();
+        TimeTable.TimeTableBuilder timeTableBuilder = TimeTable.builder().uuid("2020111421");
         for (Integer key: timetableMap.keySet()) {
             timeTableBuilder = putPeriod(timeTableBuilder, key, timetableMap.get(key));
         }
         assert timeTableBuilder != null;
         timeTableRepository.save(timeTableBuilder.build());
     }
-
+    // id 추가 및 스케줄링 안됨. 및 트레이싱 추가
     private TimeTable.TimeTableBuilder putPeriod(TimeTable.TimeTableBuilder timeTableBuilder, Integer time, String subject) {
         if (time == 1) {
             return timeTableBuilder.firstPeriod(subject);

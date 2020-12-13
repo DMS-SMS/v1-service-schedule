@@ -1,5 +1,6 @@
 package dsm.service.schedule.infra.schoolApi;
 
+import dsm.service.schedule.service.aop.annotation.Tracing;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -17,6 +18,7 @@ public class SchoolApiServiceImpl implements SchoolApiService {
     private String key;
 
     @Override
+    @Tracing(serviceName = "schoolAPI (getTimetable)")
     public Map<Integer, String> getTimeTable(Integer grade, Integer group, Integer year, Integer month, Integer day) {
         try {
             HashMap<Integer, String> tableMap = new HashMap<Integer, String>();

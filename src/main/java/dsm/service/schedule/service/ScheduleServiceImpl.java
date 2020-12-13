@@ -30,13 +30,13 @@ public class ScheduleServiceImpl implements ScheduleService {
     public GetScheduleResponse getScheduleService(GetScheduleRequest request) {
         Iterable<Schedule> schedules = getScheduleUseCase.execute(request.getYear(), request.getMonth());
         GetScheduleResponse.Builder response = scheduleMapper.getScheduleMapper(schedules);
-        return response.build();
+        return response.setStatus(200).build();
     }
 
     @Override
     public GetTimeTableResponse getTimeTableService(GetTimeTableRequest request) {
         TimeTable timetable= getTimeTableUseCase.execute(request.getUuid(), request.getWeekNumber());
-        return timeTableMapper.getScheduleMapper(timetable).build();
+        return timeTableMapper.getScheduleMapper(timetable).setStatus(200).build();
     }
 
     @Override

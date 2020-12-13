@@ -23,7 +23,7 @@ public class AuthHandler {
 
     private String serviceName = "DMS.SMS.v1.service.auth";
 
-    @Tracing(serviceName = "AuthConnection")
+    @Tracing(serviceName = "AuthConnection (getTeacherInform)")
     public GetTeacherInformWithUUIDResponse getTeacherInform(
             GetTeacherInformWithUUIDRequest request
     ) {
@@ -44,7 +44,7 @@ public class AuthHandler {
         return MetadataUtils.attachHeaders(authTeacherStub, metadata).getTeacherInformWithUUID(request);
     }
 
-    @Tracing(serviceName = "AuthConnection")
+    @Tracing(serviceName = "AuthConnection (getStudentInform)")
     public GetStudentInformWithUUIDResponse getStudentInform(
             GetStudentInformWithUUIDRequest request
     ) {

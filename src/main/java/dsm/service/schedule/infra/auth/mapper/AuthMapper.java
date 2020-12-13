@@ -1,6 +1,7 @@
 package dsm.service.schedule.infra.auth.mapper;
 
 import dsm.service.schedule.domain.entity.Account;
+import dsm.service.schedule.domain.exception.NotFoundException;
 import dsm.service.schedule.proto.GetStudentInformWithUUIDRequest;
 import dsm.service.schedule.proto.GetStudentInformWithUUIDResponse;
 import dsm.service.schedule.proto.GetTeacherInformWithUUIDRequest;
@@ -41,6 +42,8 @@ public class AuthMapper {
 
     public Optional<Account> authGetStudentInformResponseMapper(GetStudentInformWithUUIDResponse response) {
         if (response.getStatus() != 200) {
+            throw new NotFoundException(response.getMessage());
+            System.out.println(response.getMessage());
             return Optional.empty();
         }
 

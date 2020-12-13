@@ -17,7 +17,9 @@ service ScheduleService {
 
 message GetTimeTableRequest {
     string uuid = 1;
-    int32 weekNumber = 2;
+    int32 year = 2;
+    int32 month = 3;
+    int32 day = 4;
 }
 
 message GetTimeTableResponse {

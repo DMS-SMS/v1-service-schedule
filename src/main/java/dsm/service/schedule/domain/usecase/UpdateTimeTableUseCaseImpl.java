@@ -27,9 +27,9 @@ public class UpdateTimeTableUseCaseImpl {
                 .with(TemporalAdjusters.lastDayOfMonth());
         int lastDayOfMonth = Integer.parseInt(String.valueOf(LastLocalDateOfMonth.getDayOfMonth()));
 
-        for (int grade = 1; grade < 3; grade++) {
-            for (int group = 1; group < 4; group++) {
-                for (int day = 1; day < lastDayOfMonth; day++ ) {
+        for (int grade = 1; grade <= 3; grade++) {
+            for (int group = 1; group <= 4; group++) {
+                for (int day = 1; day <= lastDayOfMonth; day++ ) {
                     Map<Integer, String> timetableMap = schoolApiService.getTimeTable(
                             grade, group, now.getYear(), now.getMonthValue(), day);
 

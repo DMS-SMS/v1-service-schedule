@@ -16,7 +16,7 @@ public class DeleteScheduleUseCaseImpl implements DeleteScheduleUseCase {
     private final TeacherRepository teacherRepository;
 
     @Override
-    public void run(String teacherUuid, String scheduleUuid) {
+    public void execute(String teacherUuid, String scheduleUuid) {
         Account account = teacherRepository.findById(teacherUuid)
                 .orElseThrow(UnauthorizedException::new);
 

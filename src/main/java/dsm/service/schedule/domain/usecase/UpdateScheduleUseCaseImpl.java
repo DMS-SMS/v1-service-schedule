@@ -19,7 +19,7 @@ public class UpdateScheduleUseCaseImpl implements UpdateScheduleUseCase {
     private final TeacherRepository teacherRepository;
 
     @Override
-    public void run(
+    public void execute(
             String teacherUuid, String scheduleUuid, String detail, Long startTime, Long endTime
     ) {
         Account account = teacherRepository.findById(teacherUuid)

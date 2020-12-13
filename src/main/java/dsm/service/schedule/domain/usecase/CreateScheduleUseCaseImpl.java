@@ -23,7 +23,7 @@ public class CreateScheduleUseCaseImpl implements CreateScheduleUseCase {
     final private UuidService uuidService;
 
     @Override
-    public String run(
+    public String execute(
             String teacherUuid, String detail, Long startTime, Long endTime
     ) {
         Account account = teacherRepository.findById(teacherUuid)

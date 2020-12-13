@@ -28,27 +28,27 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public GetScheduleResponse getScheduleService(GetScheduleRequest request) {
-        Iterable<Schedule> schedules = getScheduleUseCase.run(request.getYear(), request.getMonth());
+        Iterable<Schedule> schedules = getScheduleUseCase.execute(request.getYear(), request.getMonth());
         GetScheduleResponse.Builder response = scheduleMapper.getScheduleMapper(schedules);
         return response.build();
     }
 
     @Override
     public GetTimeTableResponse getTimeTableService(GetTimeTableRequest request) {
-        TimeTable timetable= getTimeTableUseCase.run(request.getUuid(), request.getWeekNumber());
+        TimeTable timetable= getTimeTableUseCase.execute(request.getUuid(), request.getWeekNumber());
         return timeTableMapper.getScheduleMapper(timetable).build();
     }
 
     @Override
     public DefaultScheduleResponse createScheduleService(CreateScheduleRequest request) {
-        String schedule_uuid = createScheduleUseCase.run(
+        String schedule_uuid = createScheduleUseCase.execute(
                 request.getUuid(), request.getDetail(), request.getStartDate(), request.getEndDate());
         return DefaultScheduleResponse.newBuilder().setScheduleUUID(schedule_uuid).setStatus(201).build();
     }
 
     @Override
     public DefaultScheduleResponse updateScheduleService(UpdateScheduleRequest request) {
-        updateScheduleUseCase.run(
+        updateScheduleUseCase.execute(
                 request.getUuid(),
                 request.getScheduleUUID(),
                 request.getDetail(),
@@ -60,7 +60,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public DefaultScheduleResponse deleteScheduleService(DeleteScheduleRequest request) {
-        deleteScheduleUseCase.run(request.getUuid(), request.getScheduleUUID());
+        deleteScheduleUseCase.execute(request.getUuid(), request.getScheduleUUID());
         return DefaultScheduleResponse.newBuilder().setScheduleUUID(request.getScheduleUUID()).setStatus(200).build();
     }
 }

@@ -1,5 +1,6 @@
 package dsm.service.schedule.infra.schoolApi;
 
+import dsm.service.schedule.domain.exception.ServerError;
 import dsm.service.schedule.service.aop.annotation.Tracing;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
@@ -46,8 +47,7 @@ public class SchoolApiServiceImpl implements SchoolApiService {
 
             return tableMap;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new ServerError(e.getMessage());
         }
-        return new HashMap<>();
     }
 }

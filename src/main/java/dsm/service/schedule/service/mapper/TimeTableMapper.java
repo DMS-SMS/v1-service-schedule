@@ -8,19 +8,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TimeTableMapper {
-    public GetTimeTableResponse.Builder getScheduleMapper(
+    public GetTimeTableResponse.Builder getTimeTableMapper(
             TimeTable timeTable
     ) {
         GetTimeTableResponse.Builder response = GetTimeTableResponse.newBuilder();
-        response.setStatus(200)
-                .setTime1(timeTable.getFifthPeriod())
-                .setTime2(timeTable.getSecondPeriod())
-                .setTime3(timeTable.getThirdPeriod())
-                .setTime4(timeTable.getFourthPeriod())
-                .setTime5(timeTable.getFifthPeriod())
-                .setTime6(timeTable.getSixthPeriod())
-                .setTime7(timeTable.getSeventhPeriod());
+        if (timeTable.getFirstPeriod() != null) response.setTime1(timeTable.getFirstPeriod());
+        if (timeTable.getSecondPeriod() != null) response.setTime2(timeTable.getSecondPeriod());
+        if (timeTable.getThirdPeriod() != null) response.setTime3(timeTable.getThirdPeriod());
+        if (timeTable.getFourthPeriod() != null) response.setTime4(timeTable.getFourthPeriod());
+        if (timeTable.getFifthPeriod() != null) response.setTime5(timeTable.getFifthPeriod());
+        if (timeTable.getSixthPeriod() != null) response.setTime6(timeTable.getSixthPeriod());
+        if (timeTable.getSeventhPeriod() != null) response.setTime7(timeTable.getSeventhPeriod());
 
-        return response;
+        return response.setStatus(200);
     }
 }

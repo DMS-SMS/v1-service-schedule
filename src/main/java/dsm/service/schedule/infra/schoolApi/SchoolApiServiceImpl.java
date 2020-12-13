@@ -8,10 +8,7 @@ import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -22,7 +19,7 @@ public class SchoolApiServiceImpl implements SchoolApiService {
     @Override
     public Map<Integer, String> getTimeTable(Integer grade, Integer group, Integer year, Integer month, Integer day) {
         try {
-            Map<Integer, String> tableMap = new java.util.HashMap<>(Map.of());
+            HashMap<Integer, String> tableMap = new HashMap<Integer, String>();
             String json = Jsoup.connect(
                     "https://open.neis.go.kr/hub/hisTimetable?" +
                             "KEY="+key+
@@ -49,6 +46,6 @@ public class SchoolApiServiceImpl implements SchoolApiService {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return Map.of();
+        return new HashMap<>();
     }
 }

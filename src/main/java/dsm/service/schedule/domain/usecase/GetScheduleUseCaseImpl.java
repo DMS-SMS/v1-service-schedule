@@ -1,6 +1,7 @@
 package dsm.service.schedule.domain.usecase;
 
 import dsm.service.schedule.domain.entity.Schedule;
+import dsm.service.schedule.domain.exception.ServerError;
 import dsm.service.schedule.domain.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -21,12 +22,14 @@ public class GetScheduleUseCaseImpl implements GetScheduleUseCase{
                 .with(TemporalAdjusters.lastDayOfMonth());
         int lastDayOfMonth = Integer.parseInt(String.valueOf(LastLocalDateOfMonth.getDayOfMonth()));
 
-        return scheduleRepository.findAllByStartDateBetweenOrEndDateBetween(
-                LocalDate.of(year, month, 1),
-                LocalDate.of(year, month, lastDayOfMonth),
-                LocalDate.of(year, month, 1),
-                LocalDate.of(year, month, lastDayOfMonth)
-                );
+        throw new ServerError(date + lastDayOfMonth);
+
+//        return scheduleRepository.findAllByStartDateBetweenOrEndDateBetween(
+//                LocalDate.of(year, month, 1),
+//                LocalDate.of(year, month, lastDayOfMonth),
+//                LocalDate.of(year, month, 1),
+//                LocalDate.of(year, month, lastDayOfMonth)
+//                );
     }
 
 }

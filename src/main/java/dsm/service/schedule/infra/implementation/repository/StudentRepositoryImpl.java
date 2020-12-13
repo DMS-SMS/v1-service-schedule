@@ -26,8 +26,7 @@ public class StudentRepositoryImpl implements StudentRepository {
                             authMapper.authGetStudentInformRequestMapper(uuid))
             );
         } catch (Exception ignored) {
-            throw new ServerError(ignored.getMessage());
-//            return Optional.empty();
+            return Optional.empty();
         }
     }
 }

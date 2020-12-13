@@ -42,8 +42,7 @@ public class AuthMapper {
 
     public Optional<Account> authGetStudentInformResponseMapper(GetStudentInformWithUUIDResponse response) {
         if (response.getStatus() != 200) {
-            throw new NotFoundException(response.getMessage());
-//            return Optional.empty();
+            return Optional.empty();
         }
 
         return Optional.of(Account.builder()

@@ -1,6 +1,7 @@
 package dsm.service.schedule.domain.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Getter
-@Entity(name="tbl_time_table")
+@Builder
+@Entity(name="tbl_timetable")
 @NoArgsConstructor
 @AllArgsConstructor
 public class TimeTable {
@@ -23,7 +25,7 @@ public class TimeTable {
     private Integer targetGroup;
 
     @Column(nullable = false)
-    private Integer week;
+    private String day;
 
     @Column(length = 20)
     private String firstPeriod;

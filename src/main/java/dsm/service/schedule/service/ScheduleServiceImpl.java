@@ -36,7 +36,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public GetTimeTableResponse getTimeTableService(GetTimeTableRequest request) {
-        TimeTable timetable= getTimeTableUseCase.execute(request.getUuid(), request.getWeekNumber());
+        TimeTable timetable= getTimeTableUseCase.execute(request.getUuid(), request.getYear(), request.getMonth(), request.getDay());
         return timeTableMapper.getTimeTableMapper(timetable).setStatus(200).build();
     }
 

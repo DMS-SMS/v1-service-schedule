@@ -21,16 +21,14 @@ public class GetTimeTableUseCaseImpl implements GetTimeTableUseCase {
     private final TimeService timeService;
 
     @Override
-    public TimeTable execute(String uuid, Integer weekNumber) {
+    public TimeTable execute(String uuid, Integer year, Integer month, Integer day) {
         Account student = studentRepository.findById(uuid)
                 .orElseThrow(UnauthorizedException::new);
-
-        if (weekNumber == 0) { weekNumber = timeService.getWeekNumber(); }
 
         return timeTableRepository.findByTargetGradeAndTargetGroupAndDay(
                 student.getGrade(),
                 student.getGroup(),
-                "20201214"
+                year.toString()+month.toString()+day.toString()
         ).orElseThrow(NotFoundException::new);
     }
 }

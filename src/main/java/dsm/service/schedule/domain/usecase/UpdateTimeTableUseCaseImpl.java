@@ -56,6 +56,47 @@ public class UpdateTimeTableUseCaseImpl {
                 }
             }
         }
+        int nextYear = now.getYear();
+        int nextMonth = now.getMonthValue();
+        if (nextMonth == 12) {
+            nextMonth = 1;
+            nextYear += 1;
+        }
+
+        String nextDate = nextMonth+"/01/"+nextYear;
+        LocalDate LastLocalDateOfNextMonth = LocalDate.parse(date, DateTimeFormatter.ofPattern("M/dd/yyyy"))
+                .with(TemporalAdjusters.lastDayOfMonth());
+        int lastDayOfNextMonth = Integer.parseInt(String.valueOf(LastLocalDateOfNextMonth.getDayOfMonth()));
+
+        for (int grade = 1; grade <= 3; grade++) {
+            for (int group = 1; group <= 4; group++) {
+                for (int day = 1; day <= lastDayOfNextMonth; day++ ) {
+                    Map<Integer, String> timetableMap = schoolApiService.getTimeTable(
+                            grade, group, nextYear, nextMonth, day);
+
+                    TimeTable.TimeTableBuilder timeTableBuilder = TimeTable.builder()
+                            .uuid(
+                                    String.valueOf(nextYear)+
+                                            String.valueOf(nextMonth)+
+                                            String.valueOf(day)+
+                                            String.valueOf(grade)+
+                                            String.valueOf(group))
+                            .day(
+                                    String.valueOf(nextYear)+
+                                            String.valueOf(nextMonth)+
+                                            String.valueOf(day))
+                            .targetGrade(grade)
+                            .targetGroup(group);
+
+                    for (Integer key : timetableMap.keySet()) {
+                        timeTableBuilder = putPeriod(timeTableBuilder, key, timetableMap.get(key));
+                    }
+
+                    assert timeTableBuilder != null;
+                    timeTableRepository.save(timeTableBuilder.build());
+                }
+            }
+        }
     }
     private TimeTable.TimeTableBuilder putPeriod(TimeTable.TimeTableBuilder timeTableBuilder, Integer time, String subject) {
         if (time == 1) {

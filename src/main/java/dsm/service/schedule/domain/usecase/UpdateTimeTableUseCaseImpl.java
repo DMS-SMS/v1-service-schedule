@@ -17,7 +17,7 @@ public class UpdateTimeTableUseCaseImpl {
 
     @Scheduled(fixedDelay = 2147483647)
     public void execute() {
-        Map<Integer, String> timetableMap = schoolApiService.getTimeTable(2, 1, 2020, 12, 14);
+        Map<Integer, String> timetableMap = schoolApiService.getTimeTable(2, 1, 2020, 12, 13);
         TimeTable.TimeTableBuilder timeTableBuilder = TimeTable.builder().uuid("2020121421").day("20201214").targetGrade(2).targetGroup(1);
         for (Integer key: timetableMap.keySet()) {
             timeTableBuilder = putPeriod(timeTableBuilder, key, timetableMap.get(key));

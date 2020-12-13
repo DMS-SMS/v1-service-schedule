@@ -11,7 +11,9 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Optional;
 
 @Component
@@ -29,6 +31,9 @@ public class CreateScheduleUseCaseImpl implements CreateScheduleUseCase {
         Account account = teacherRepository.findById(teacherUuid)
                 .orElseThrow(UnauthorizedException::new);
 
+        Timestamp startTimeStamp = new Timestamp(startTime*1000);
+        Timestamp endTimeStamp = new Timestamp(endTime*1000);
+
         String schedule_uuid = uuidService.generateUuid();
 
         scheduleRepository.save(
@@ -36,8 +41,8 @@ public class CreateScheduleUseCaseImpl implements CreateScheduleUseCase {
                         .uuid(schedule_uuid)
                         .teacherUuid(teacherUuid)
                         .detail(detail)
-                        .startDate(LocalDate.ofEpochDay(startTime))
-                        .endDate(LocalDate.ofEpochDay(endTime))
+                        .startDate(startTimeStamp.toLocalDateTime().toLocalDate())
+                        .endDate(endTimeStamp.toLocalDateTime().toLocalDate())
                         .build()
         );
 

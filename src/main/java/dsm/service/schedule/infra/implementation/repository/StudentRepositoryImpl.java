@@ -1,6 +1,7 @@
 package dsm.service.schedule.infra.implementation.repository;
 
 import dsm.service.schedule.domain.entity.Account;
+import dsm.service.schedule.domain.exception.ServerError;
 import dsm.service.schedule.domain.repository.StudentRepository;
 import dsm.service.schedule.infra.auth.AuthHandler;
 import dsm.service.schedule.infra.auth.mapper.AuthMapper;
@@ -25,7 +26,8 @@ public class StudentRepositoryImpl implements StudentRepository {
                             authMapper.authGetStudentInformRequestMapper(uuid))
             );
         } catch (Exception ignored) {
-            return Optional.empty();
+            throw new ServerError(ignored.getMessage());
+//            return Optional.empty();
         }
     }
 }

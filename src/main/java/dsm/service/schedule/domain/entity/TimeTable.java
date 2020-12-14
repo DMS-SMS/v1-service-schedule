@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Getter
 @Builder
-@Table(indexes = {@Index(columnList = "target_grade"), @Index(columnList = "target_group")})
+@Table(indexes = {@Index(columnList = "targetGrade"), @Index(columnList = "targetGroup")})
 @Entity(name="tbl_timetable")
 @NoArgsConstructor
 @AllArgsConstructor

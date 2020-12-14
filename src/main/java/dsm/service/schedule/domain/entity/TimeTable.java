@@ -5,12 +5,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @Builder
+@Table(indexes = {@Index(columnList = "target_grade"), @Index(columnList = "target_group")})
 @Entity(name="tbl_timetable")
 @NoArgsConstructor
 @AllArgsConstructor

@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
-public class UpdateTimeTableUseCaseImpl {
+public class UpdateTimeTableUseCaseImpl implements UpdateTimeTableUseCase {
     private final SchoolApiService schoolApiService;
     private final TimeTableRepository timeTableRepository;
 

@@ -31,8 +31,8 @@ public class CreateScheduleUseCaseImpl implements CreateScheduleUseCase {
         Account account = teacherRepository.findById(teacherUuid)
                 .orElseThrow(UnauthorizedException::new);
 
-        Timestamp startTimeStamp = new Timestamp(startTime*1000);
-        Timestamp endTimeStamp = new Timestamp(endTime*1000);
+        Timestamp startTimestamp = new Timestamp(startTime*1000);
+        Timestamp endTimestamp = new Timestamp(endTime*1000);
 
         String schedule_uuid = uuidService.generateUuid();
 
@@ -41,8 +41,8 @@ public class CreateScheduleUseCaseImpl implements CreateScheduleUseCase {
                         .uuid(schedule_uuid)
                         .teacherUuid(teacherUuid)
                         .detail(detail)
-                        .startDate(startTimeStamp.toLocalDateTime().toLocalDate())
-                        .endDate(endTimeStamp.toLocalDateTime().toLocalDate())
+                        .startDate(startTimestamp.toLocalDateTime().toLocalDate())
+                        .endDate(endTimestamp.toLocalDateTime().toLocalDate())
                         .build()
         );
 

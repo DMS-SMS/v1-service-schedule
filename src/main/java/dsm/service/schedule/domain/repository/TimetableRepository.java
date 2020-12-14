@@ -1,17 +1,16 @@
 package dsm.service.schedule.domain.repository;
 
-import dsm.service.schedule.domain.entity.TimeTable;
+import dsm.service.schedule.domain.entity.Timetable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Time;
 import java.util.Optional;
 
 @Repository
-public interface TimeTableRepository extends CrudRepository<TimeTable, String> {
+public interface TimetableRepository extends CrudRepository<Timetable, String> {
     @Override
-    Optional<TimeTable> findById(String s);
+    Optional<Timetable> findById(String s);
 
-    Optional<TimeTable> findByTargetGradeAndTargetGroupAndDay(
+    Optional<Timetable> findByTargetGradeAndTargetGroupAndDay(
             Integer targetGrade, Integer targetGroup, String day);
 }

@@ -1,7 +1,7 @@
 package dsm.service.schedule.domain.usecase;
 
-import dsm.service.schedule.domain.entity.TimeTable;
-import dsm.service.schedule.domain.repository.TimeTableRepository;
+import dsm.service.schedule.domain.entity.Timetable;
+import dsm.service.schedule.domain.repository.TimetableRepository;
 import dsm.service.schedule.infra.schoolApi.SchoolApiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,7 +17,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class UpdateTimeTableUseCaseImpl implements UpdateTimeTableUseCase {
     private final SchoolApiService schoolApiService;
-    private final TimeTableRepository timeTableRepository;
+    private final TimetableRepository timetableRepository;
 
     @Scheduled(fixedDelay = 2147483647)
     public void execute() {
@@ -33,7 +33,7 @@ public class UpdateTimeTableUseCaseImpl implements UpdateTimeTableUseCase {
                     Map<Integer, String> timetableMap = schoolApiService.getTimeTable(
                             grade, group, now.getYear(), now.getMonthValue(), day);
 
-                    TimeTable.TimeTableBuilder timeTableBuilder = TimeTable.builder()
+                    Timetable.TimetableBuilder timetableBuilder = Timetable.builder()
                             .uuid(
                                     String.valueOf(now.getYear())+
                                     String.valueOf(now.getMonthValue())+
@@ -48,11 +48,11 @@ public class UpdateTimeTableUseCaseImpl implements UpdateTimeTableUseCase {
                             .targetGroup(group);
 
                     for (Integer key : timetableMap.keySet()) {
-                        timeTableBuilder = putPeriod(timeTableBuilder, key, timetableMap.get(key));
+                        timetableBuilder = putPeriod(timetableBuilder, key, timetableMap.get(key));
                     }
 
-                    assert timeTableBuilder != null;
-                    timeTableRepository.save(timeTableBuilder.build());
+                    assert timetableBuilder != null;
+                    timetableRepository.save(timetableBuilder.build());
                 }
             }
         }
@@ -74,7 +74,7 @@ public class UpdateTimeTableUseCaseImpl implements UpdateTimeTableUseCase {
                     Map<Integer, String> timetableMap = schoolApiService.getTimeTable(
                             grade, group, nextYear, nextMonth, day);
 
-                    TimeTable.TimeTableBuilder timeTableBuilder = TimeTable.builder()
+                    Timetable.TimetableBuilder timetableBuilder = Timetable.builder()
                             .uuid(
                                     String.valueOf(nextYear)+
                                             String.valueOf(nextMonth)+
@@ -89,16 +89,16 @@ public class UpdateTimeTableUseCaseImpl implements UpdateTimeTableUseCase {
                             .targetGroup(group);
 
                     for (Integer key : timetableMap.keySet()) {
-                        timeTableBuilder = putPeriod(timeTableBuilder, key, timetableMap.get(key));
+                        timetableBuilder = putPeriod(timetableBuilder, key, timetableMap.get(key));
                     }
 
-                    assert timeTableBuilder != null;
-                    timeTableRepository.save(timeTableBuilder.build());
+                    assert timetableBuilder != null;
+                    timetableRepository.save(timetableBuilder.build());
                 }
             }
         }
     }
-    private TimeTable.TimeTableBuilder putPeriod(TimeTable.TimeTableBuilder timeTableBuilder, Integer time, String subject) {
+    private Timetable.TimetableBuilder putPeriod(Timetable.TimetableBuilder timeTableBuilder, Integer time, String subject) {
         if (time == 1) {
             return timeTableBuilder.firstPeriod(subject);
         } else if (time == 2) {

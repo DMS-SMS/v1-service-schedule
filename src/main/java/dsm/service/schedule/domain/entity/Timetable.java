@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity(name="tbl_timetable")
 @NoArgsConstructor
 @AllArgsConstructor
-public class TimeTable {
+public class Timetable {
     @Id
     private String uuid;
 

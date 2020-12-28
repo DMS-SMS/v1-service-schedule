@@ -18,8 +18,8 @@ public class ScheduleMapper {
             response.addSchedule(
                     dsm.service.schedule.proto.Schedule.newBuilder()
             .setScheduleUUID(schedule.getUuid())
-            .setStartDate(Timestamp.valueOf(LocalDateTime.of(schedule.getStartDate(), LocalTime.of(1, 1))).getTime())
-            .setEndDate(Timestamp.valueOf(LocalDateTime.of(schedule.getEndDate(), LocalTime.of(1, 1))).getTime())
+            .setStartDate(Timestamp.valueOf(LocalDateTime.of(schedule.getStartDate(), LocalTime.of(-9, 0))).getTime())
+            .setEndDate(Timestamp.valueOf(LocalDateTime.of(schedule.getEndDate(), LocalTime.of(-9, 0))).getTime())
             .setDetail(schedule.getDetail())
             .build());
         }

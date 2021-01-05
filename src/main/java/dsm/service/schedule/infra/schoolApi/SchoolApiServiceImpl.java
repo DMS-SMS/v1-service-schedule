@@ -31,7 +31,7 @@ public class SchoolApiServiceImpl implements SchoolApiService {
                             "&SD_SCHUL_CODE=7430310" +
                             "&GRADE="+grade.toString()+
                             "&CLASS_NM="+group.toString()+
-                            "&ALL_TI_YMD="+year.toString()+month.toString()+day.toString())
+                            "&ALL_TI_YMD="+year.toString()+String.format("%02d", month)+String.format("%02d", day))
                     .ignoreContentType(true).execute().body();
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObject = (JSONObject) jsonParser.parse(json);

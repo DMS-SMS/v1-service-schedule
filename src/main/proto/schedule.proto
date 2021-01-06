@@ -9,10 +9,21 @@ package schedule;
 
 service ScheduleService {
     rpc GetTimeTable(GetTimeTableRequest) returns (GetTimeTableResponse) {}
+    rpc GetTimeTables(GetTimeTablesRequest) returns (GetTimeTablesResponse) {}
     rpc GetSchedule(GetScheduleRequest) returns (GetScheduleResponse) {}
     rpc CreateSchedule(CreateScheduleRequest) returns (DefaultScheduleResponse) {}
     rpc UpdateSchedule(UpdateScheduleRequest) returns (DefaultScheduleResponse) {}
     rpc DeleteSchedule(DeleteScheduleRequest) returns (DefaultScheduleResponse) {}
+}
+
+message TimeTable {
+    string time1 = 1;
+    string time2 = 2;
+    string time3 = 3;
+    string time4 = 4;
+    string time5 = 5;
+    string time6 = 6;
+    string time7 = 7;
 }
 
 message GetTimeTableRequest {
@@ -33,6 +44,21 @@ message GetTimeTableResponse {
     string time5 = 8;
     string time6 = 9;
     string time7 = 10;
+}
+
+message GetTimeTablesRequest {
+    string uuid = 1;
+    int32 year = 2;
+    int32 month = 3;
+    int32 day = 4;
+    int32 count = 5;
+}
+
+message GetTimeTablesResponse {
+    int32 status = 1;
+    int32 code = 2;
+    string msg = 3;
+    repeated TimeTable timeTable = 4;
 }
 
 message GetScheduleRequest {

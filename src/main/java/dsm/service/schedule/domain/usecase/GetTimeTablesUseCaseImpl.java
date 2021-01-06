@@ -3,6 +3,7 @@ package dsm.service.schedule.domain.usecase;
 import dsm.service.schedule.domain.entity.Timetable;
 import dsm.service.schedule.proto.TimeTable;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+@Component
 @RequiredArgsConstructor
 public class GetTimeTablesUseCaseImpl implements GetTimeTablesUseCase {
     private final GetTimeTableUseCase getTimeTableUseCase;

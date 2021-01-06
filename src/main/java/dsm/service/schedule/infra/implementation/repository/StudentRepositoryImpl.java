@@ -25,6 +25,8 @@ public class StudentRepositoryImpl implements StudentRepository {
                     authHandler.getStudentInform(
                             authMapper.authGetStudentInformRequestMapper(uuid))
             );
+        } catch (InterruptedException e) {
+            throw new ServerError("Auth server (Student) timeout (3s) on Schedule Service. Detail : \n "+ e.getMessage());
         } catch (Exception ignored) {
             return Optional.empty();
         }

@@ -12,6 +12,8 @@ public interface ScheduleService {
 
     public GetTimeTableResponse getTimeTableService(GetTimeTableRequest request);
 
+    public GetTimeTablesResponse getTimeTablesService(GetTimeTablesRequest request);
+
     public DefaultScheduleResponse createScheduleService(CreateScheduleRequest request);
 
     public DefaultScheduleResponse updateScheduleService(UpdateScheduleRequest request);

@@ -20,6 +20,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     private final UpdateTimeTableUseCaseImpl updateTimeTableUseCase;
     private final GetTimeTableUseCase getTimeTableUseCase;
+    private final GetTimeTablesUseCase getTimeTablesUseCase;
 
     private final ScheduleMapper scheduleMapper;
     private final TimetableMapper timetableMapper;
@@ -33,8 +34,16 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public GetTimeTableResponse getTimeTableService(GetTimeTableRequest request) {
-        Timetable timetable= getTimeTableUseCase.execute(request.getUuid(), request.getYear(), request.getMonth(), request.getDay());
+        Timetable timetable = getTimeTableUseCase.execute(request.getUuid(), request.getYear(), request.getMonth(), request.getDay());
         return timetableMapper.getTimetableMapper(timetable).setStatus(200).build();
+    }
+
+    @Override
+    public GetTimeTablesResponse getTimeTablesService(GetTimeTablesRequest request) {
+        return timetableMapper.getTimetablesMapper(
+                getTimeTablesUseCase.execute(
+                        request.getUuid(), request.getYear(), request.getMonth(), request.getDay(), request.getCount()
+                )).setStatus(200).build();
     }
 
     @Override

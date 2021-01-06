@@ -15,6 +15,8 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.TimeUnit;
+
 @Component
 @RequiredArgsConstructor
 public class AuthHandler {
@@ -26,7 +28,7 @@ public class AuthHandler {
     @Tracing(serviceName = "AuthConnection (getTeacherInform)")
     public GetTeacherInformWithUUIDResponse getTeacherInform(
             GetTeacherInformWithUUIDRequest request
-    ) {
+    ) throws InterruptedException {
         String host = consulHandler.getServiceHost(serviceName);
         Integer port = consulHandler.getServicePort(serviceName);
 
@@ -42,13 +44,14 @@ public class AuthHandler {
 
         GetTeacherInformWithUUIDResponse response = MetadataUtils.attachHeaders(authTeacherStub, metadata).getTeacherInformWithUUID(request);
         channel.shutdown();
+        channel.awaitTermination(3, TimeUnit.SECONDS);
         return response;
     }
 
     @Tracing(serviceName = "AuthConnection (getStudentInform)")
     public GetStudentInformWithUUIDResponse getStudentInform(
             GetStudentInformWithUUIDRequest request
-    ) {
+    ) throws InterruptedException {
         String host = consulHandler.getServiceHost(serviceName);
         Integer port = consulHandler.getServicePort(serviceName);
 
@@ -63,6 +66,7 @@ public class AuthHandler {
         metadata.put(Metadata.Key.of("span-context", Metadata.ASCII_STRING_MARSHALLER), spanContext);
         GetStudentInformWithUUIDResponse response = MetadataUtils.attachHeaders(authStudentStub, metadata).getStudentInformWithUUID(request);
         channel.shutdown();
+        channel.awaitTermination(3, TimeUnit.SECONDS);
         return response;
     }
 }

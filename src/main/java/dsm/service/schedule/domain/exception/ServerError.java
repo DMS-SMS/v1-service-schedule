@@ -9,6 +9,10 @@ public class ServerError extends BusinessException {
         super(500, -1000, message);
     }
 
+    public ServerError(int status, String message) {
+        super(status, -1000, message);
+    }
+
     public ServerError(Integer StatusCode, Integer ErrorCode, String message) {
         super(StatusCode, ErrorCode, message);
     }

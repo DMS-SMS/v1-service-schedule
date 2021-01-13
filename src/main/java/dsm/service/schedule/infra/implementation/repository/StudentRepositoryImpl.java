@@ -27,6 +27,8 @@ public class StudentRepositoryImpl implements StudentRepository {
             );
         } catch (InterruptedException e) {
             throw new ServerError("Auth server (Student) timeout (3s) on Schedule Service. Detail : \n "+ e.getMessage());
+        } catch (NullPointerException e) {
+            throw new ServerError(503, "Can not found service in Consul");
         } catch (Exception ignored) {
             return Optional.empty();
         }

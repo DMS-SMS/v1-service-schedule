@@ -11,7 +11,9 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Optional;
 
 @Component
@@ -23,11 +25,14 @@ public class CreateScheduleUseCaseImpl implements CreateScheduleUseCase {
     final private UuidService uuidService;
 
     @Override
-    public String run(
+    public String execute(
             String teacherUuid, String detail, Long startTime, Long endTime
     ) {
         Account account = teacherRepository.findById(teacherUuid)
                 .orElseThrow(UnauthorizedException::new);
+
+        Timestamp startTimestamp = new Timestamp(startTime*1000);
+        Timestamp endTimestamp = new Timestamp(endTime*1000);
 
         String schedule_uuid = uuidService.generateUuid();
 
@@ -36,8 +41,8 @@ public class CreateScheduleUseCaseImpl implements CreateScheduleUseCase {
                         .uuid(schedule_uuid)
                         .teacherUuid(teacherUuid)
                         .detail(detail)
-                        .startDate(LocalDate.ofEpochDay(startTime))
-                        .endDate(LocalDate.ofEpochDay(endTime))
+                        .startDate(startTimestamp.toLocalDateTime().toLocalDate())
+                        .endDate(endTimestamp.toLocalDateTime().toLocalDate())
                         .build()
         );
 

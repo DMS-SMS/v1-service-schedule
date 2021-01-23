@@ -13,5 +13,5 @@ public interface ScheduleRepository extends CrudRepository<Schedule, String> {
     @Override
     Iterable<Schedule> findAll();
 
-    Iterable<Schedule> findAllByStartDateBetweenOrEndDateBetween(LocalDate startDate, LocalDate startDate2, LocalDate endDate, LocalDate endDate2);
+    Iterable<Schedule> findByStartDateBetweenOrEndDateBetween(LocalDate startDate, LocalDate startDate2, LocalDate endDate, LocalDate endDate2);
 }

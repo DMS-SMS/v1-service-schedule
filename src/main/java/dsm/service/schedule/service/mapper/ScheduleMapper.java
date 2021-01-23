@@ -4,6 +4,10 @@ import dsm.service.schedule.domain.entity.Schedule;
 import dsm.service.schedule.proto.GetScheduleResponse;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 @Component
 public class ScheduleMapper {
     public GetScheduleResponse.Builder getScheduleMapper(
@@ -14,8 +18,8 @@ public class ScheduleMapper {
             response.addSchedule(
                     dsm.service.schedule.proto.Schedule.newBuilder()
             .setScheduleUUID(schedule.getUuid())
-            .setStartDate(schedule.getStartDate().toEpochDay())
-            .setEndDate(schedule.getEndDate().toEpochDay())
+            .setStartDate(Timestamp.valueOf(LocalDateTime.of(schedule.getStartDate(), LocalTime.of(0, 0))).getTime())
+            .setEndDate(Timestamp.valueOf(LocalDateTime.of(schedule.getEndDate(), LocalTime.of(0, 0))).getTime())
             .setDetail(schedule.getDetail())
             .build());
         }

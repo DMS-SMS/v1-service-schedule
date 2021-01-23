@@ -8,6 +8,7 @@ import dsm.service.schedule.domain.repository.TeacherRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -19,18 +20,20 @@ public class UpdateScheduleUseCaseImpl implements UpdateScheduleUseCase {
     private final TeacherRepository teacherRepository;
 
     @Override
-    public void run(
+    public void execute(
             String teacherUuid, String scheduleUuid, String detail, Long startTime, Long endTime
     ) {
         Account account = teacherRepository.findById(teacherUuid)
                 .orElseThrow(UnauthorizedException::new);
 
+        Timestamp startTimestamp = new Timestamp(startTime*1000);
+        Timestamp endTimestamp = new Timestamp(endTime*1000);
 
         scheduleRepository.findById(scheduleUuid)
                 .ifPresent(schedule -> {
                     schedule.setDetail(detail);
-                    schedule.setStartDate(LocalDate.ofEpochDay(startTime));
-                    schedule.setEndDate(LocalDate.ofEpochDay(endTime));
+                    schedule.setStartDate(startTimestamp.toLocalDateTime().toLocalDate());
+                    schedule.setEndDate(endTimestamp.toLocalDateTime().toLocalDate());
                     scheduleRepository.save(
                             schedule
                     );

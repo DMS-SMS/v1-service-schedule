@@ -4,14 +4,18 @@ services:
     image: migsking/dms-sms-service-schedule:${VERSION}
     container_name: service-schedule
     networks:
-      - dms_sms_local
+      - dms-sms-local
     environment:
       - DB_PASSWORD=${DB_PASSWORD}
       - CONSUL_ADDR=${CONSUL_ADDRESS}
       - JAEGER_AGENT_HOST=${JAEGER_HOST}
       - JAEGER_AGENT_PORT=${JAEGER_PORT}
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels: [APP=service-schedule]
 
 networks:
-  dms_sms_local:
-    name: dms_sms_local
-    driver: bridge
+  dms-sms-local:
+    name: dms-sms-local
+    driver: overlay

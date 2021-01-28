@@ -1,0 +1,31 @@
+spring:
+  main:
+    web-application-type: none
+  jpa:
+    properties:
+      hibernate:
+        ejb:
+          interceptor: dsm.service.schedule.infra.mysql.MysqlInterceptor
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+
+schedule:
+  schoolApi:
+    key: ${API_KEY}
+
+grpc:
+  port: 0
+
+cloud:
+  aws:
+    sqs:
+      url: ${SQS_ADDRESS}
+    region:
+      static: ap-northeast-2
+    credentials:
+      instance-profile: true
+      accessKey: ${AWS_ACCESS_KEY_ID}
+      secretKey: ${AWS_SECRET_ACCESS_KEY}
+    stack:
+      auto: false

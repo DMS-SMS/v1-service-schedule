@@ -25,13 +25,18 @@ public class AuthHandler {
 
     private String serviceName = "DMS.SMS.v1.service.auth";
 
+    private String host = null;
+    private Integer port = null;
+
+    public void updateServiceAddress() {
+        host = consulHandler.getServiceHost(serviceName);
+        port = consulHandler.getServicePort(serviceName);
+    }
+
     @Tracing(serviceName = "AuthConnection (getTeacherInform)")
     public GetTeacherInformWithUUIDResponse getTeacherInform(
             GetTeacherInformWithUUIDRequest request
     ) throws InterruptedException {
-        String host = consulHandler.getServiceHost(serviceName);
-        Integer port = consulHandler.getServicePort(serviceName);
-
         ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
         AuthTeacherGrpc.AuthTeacherBlockingStub authTeacherStub = AuthTeacherGrpc.newBlockingStub(channel);
 
@@ -52,9 +57,6 @@ public class AuthHandler {
     public GetStudentInformWithUUIDResponse getStudentInform(
             GetStudentInformWithUUIDRequest request
     ) throws InterruptedException {
-        String host = consulHandler.getServiceHost(serviceName);
-        Integer port = consulHandler.getServicePort(serviceName);
-
         ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
         AuthStudentGrpc.AuthStudentBlockingStub authStudentStub = AuthStudentGrpc.newBlockingStub(channel);
 

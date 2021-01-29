@@ -1,23 +1,33 @@
 package dsm.service.schedule.core.domain.entity;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Value;
+
+import java.time.LocalDate;
+
+@Getter
+@Builder
 public class Timetable {
-    private String timetableUuid;
+    String timetableUuid;
 
-    private Integer targetGrade;
+    Integer targetGrade;
 
-    private Integer targetGroup;
+    Integer targetGroup;
 
-    private String firstSubject;
+    LocalDate date;
 
-    private String secondSubject;
+    String firstSubject;
 
-    private String thirdSubject;
+    String secondSubject;
 
-    private String fourthSubject;
+    String thirdSubject;
 
-    private String fifthSubject;
+    String fourthSubject;
 
-    private String sixthSubject;
+    String fifthSubject;
 
-    private String seventhSubject;
+    String sixthSubject;
+
+    String seventhSubject;
 }

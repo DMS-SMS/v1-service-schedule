@@ -1,13 +1,16 @@
 package dsm.service.schedule.core.domain.entity;
 
+import lombok.Value;
+
 import java.time.LocalDate;
 
+@Value
 public class Schedule {
-    private String scheduleUuid;
+    String scheduleUuid;
 
-    private String detail;
+    String detail;
 
-    private LocalDate startDate;
+    LocalDate startDate;
 
-    private LocalDate endDate;
+    LocalDate endDate;
 }

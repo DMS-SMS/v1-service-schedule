@@ -1,15 +1,17 @@
 package dsm.service.schedule.core.domain.entity;
 
 import dsm.service.schedule.core.domain.entity.enums.AccountType;
+import lombok.Value;
 
+@Value
 public class Account {
-    private Integer grade;
+    Integer grade;
 
-    private Integer group;
+    Integer group;
 
-    private String name;
+    String name;
 
-    private String phoneNumber;
+    String phoneNumber;
 
-    private AccountType type;
+    AccountType type;
 }

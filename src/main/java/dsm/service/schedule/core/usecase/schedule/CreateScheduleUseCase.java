@@ -39,12 +39,12 @@ public class CreateScheduleUseCase extends UseCase<CreateScheduleUseCase.InputVa
         Timestamp startTimestamp = generateTimestamp(input.startTime);
         Timestamp endTimestamp = generateTimestamp(input.endTime);
 
-        return new Schedule(
-                generateScheduleUuid(),
-                input.teacherUuid,
-                startTimestamp.toLocalDateTime().toLocalDate(),
-                endTimestamp.toLocalDateTime().toLocalDate()
-        );
+        return Schedule.builder()
+                .scheduleUuid(generateScheduleUuid())
+                .detail(input.detail)
+                .startDate(startTimestamp.toLocalDateTime().toLocalDate())
+                .endDate(endTimestamp.toLocalDateTime().toLocalDate())
+                .build();
     }
 
     private Timestamp generateTimestamp(Long secondTimestamp) {

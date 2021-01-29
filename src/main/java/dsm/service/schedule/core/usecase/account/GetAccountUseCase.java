@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
 public class GetAccountUseCase extends UseCase<GetAccountUseCase.InputValues, GetAccountUseCase.OutputValues> {
@@ -17,13 +19,13 @@ public class GetAccountUseCase extends UseCase<GetAccountUseCase.InputValues, Ge
         return new OutputValues(getAccount(input.accountUuid));
     }
 
-    private Account getAccount(String accountUuid) {
+    private Optional<Account> getAccount(String accountUuid) {
         switch (accountUuid.substring(0, accountUuid.length() - 13)) {
             case "admin": return accountRepository.findAdminByUuid(accountUuid, accountUuid);
             case "student": return accountRepository.findStudentByUuid(accountUuid, accountUuid);
             case "teacher": return accountRepository.findTeacherByUuid(accountUuid, accountUuid);
             case "parents": return accountRepository.findParentsByUuid(accountUuid, accountUuid);
-            default: return null;
+            default: return Optional.empty();
         }
     }
 
@@ -34,6 +36,6 @@ public class GetAccountUseCase extends UseCase<GetAccountUseCase.InputValues, Ge
 
     @Value
     static public class OutputValues implements UseCase.OutputValues {
-        Account account;
+        Optional<Account> account;
     }
 }

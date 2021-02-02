@@ -1,17 +1,13 @@
 package dsm.service.schedule.infra.auth;
 
 import dsm.service.schedule.grpc.MetadataInterceptor;
-import dsm.service.schedule.infra.consul.ConsulHandler;
 import dsm.service.schedule.infra.openTracing.JaegerHandler;
 import dsm.service.schedule.proto.*;
 import dsm.service.schedule.service.aop.annotation.Tracing;
-import io.grpc.ClientInterceptors;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.Metadata;
 import io.grpc.stub.MetadataUtils;
-import io.grpc.stub.StreamObserver;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -20,7 +20,7 @@ public class GetScheduleUseCase extends UseCase<GetScheduleUseCase.InputValues, 
     }
 
     private String generateDate(int year, int month) {
-        return year+"-"+month;
+        return year+"-"+String.format("%02d", month);
     }
 
     @Value

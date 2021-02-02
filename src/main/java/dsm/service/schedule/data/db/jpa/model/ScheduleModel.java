@@ -19,9 +19,6 @@ public class ScheduleModel {
     @Id
     private String uuid;
 
-    @Column(length = 20, nullable = false)
-    private String teacherUuid;
-
     @Column(length = 100, nullable = false)
     private String detail;
 

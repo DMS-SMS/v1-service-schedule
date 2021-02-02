@@ -4,6 +4,7 @@ spring:
   jpa:
     properties:
       hibernate:
+        show_sql: true
         ejb:
           interceptor: dsm.service.schedule.infra.config.db.mysql.MysqlInterceptor
     hibernate:

@@ -35,6 +35,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
 
     @Override
     public List<Schedule> findByCorrectDate(String date) {
+        System.out.println("ff");
         return scheduleRepositoryMapper.map(jpaScheduleRepository.findByCorrectDate(date));
     }
 }

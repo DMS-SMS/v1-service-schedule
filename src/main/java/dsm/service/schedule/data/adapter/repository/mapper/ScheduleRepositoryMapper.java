@@ -37,6 +37,8 @@ public class ScheduleRepositoryMapper {
     }
 
     public List<Schedule> map(List<ScheduleModel> scheduleModels) {
+        System.out.println(scheduleModels);
+        System.out.println("aa");
         List<Schedule> schedules = new ArrayList<Schedule>();
 
         for (ScheduleModel scheduleModel: scheduleModels) {

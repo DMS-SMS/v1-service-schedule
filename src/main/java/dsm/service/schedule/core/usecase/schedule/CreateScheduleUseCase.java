@@ -1,5 +1,6 @@
 package dsm.service.schedule.core.usecase.schedule;
 
+import dsm.service.schedule.core.domain.entity.Account;
 import dsm.service.schedule.core.domain.entity.Schedule;
 import dsm.service.schedule.core.domain.entity.enums.AccountType;
 import dsm.service.schedule.core.domain.exception.UnauthorizedException;
@@ -26,13 +27,11 @@ public class CreateScheduleUseCase extends UseCase<CreateScheduleUseCase.InputVa
     }
 
     private void checkAuthority(String accountUuid) {
-        getAccountUseCase.execute(new GetAccountUseCase.InputValues(accountUuid)).getAccount().ifPresentOrElse(
-                account -> {
-                    if (account.getType() != AccountType.TEACHER && account.getType() != AccountType.ADMIN) {
-                        throw new UnauthorizedException();
-                    }
-                }, () -> { throw new UnauthorizedException(); }
-        );
+        Account account = getAccountUseCase.execute(new GetAccountUseCase.InputValues(accountUuid)).getAccount().
+                orElseThrow(UnauthorizedException::new);
+        if (account.getType() != AccountType.TEACHER && account.getType() != AccountType.ADMIN) {
+            throw new UnauthorizedException();
+        }
     }
 
     private Schedule generateSchedule(InputValues input) {

@@ -1,4 +1,4 @@
-package dsm.service.schedule.core.usecase.Timetable;
+package dsm.service.schedule.core.usecase.timetable;
 
 import dsm.service.schedule.core.domain.entity.Timetable;
 import dsm.service.schedule.core.usecase.UseCase;

@@ -1,8 +1,8 @@
 package dsm.service.schedule.controller.grpc;
 
 import dsm.service.schedule.controller.mapper.*;
-import dsm.service.schedule.core.usecase.Timetable.GetTimetableUseCase;
-import dsm.service.schedule.core.usecase.Timetable.GetTimetablesUseCase;
+import dsm.service.schedule.core.usecase.timetable.GetTimetableUseCase;
+import dsm.service.schedule.core.usecase.timetable.GetTimetablesUseCase;
 import dsm.service.schedule.core.usecase.UseCaseExecutor;
 import dsm.service.schedule.core.usecase.schedule.CreateScheduleUseCase;
 import dsm.service.schedule.core.usecase.schedule.DeleteScheduleUseCase;

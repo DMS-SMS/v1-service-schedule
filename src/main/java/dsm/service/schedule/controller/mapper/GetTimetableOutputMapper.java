@@ -2,7 +2,7 @@ package dsm.service.schedule.controller.mapper;
 
 import dsm.service.schedule.core.Mapper;
 import dsm.service.schedule.core.domain.entity.Timetable;
-import dsm.service.schedule.core.usecase.Timetable.GetTimetableUseCase;
+import dsm.service.schedule.core.usecase.timetable.GetTimetableUseCase;
 import dsm.service.schedule.proto.GetTimeTableResponse;
 import org.springframework.stereotype.Component;
 

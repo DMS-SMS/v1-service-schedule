@@ -10,7 +10,7 @@ public class UpdateScheduleOutputMapper extends Mapper<UpdateScheduleUseCase.Out
     @Override
     public DefaultScheduleResponse map(UpdateScheduleUseCase.OutputValues input) {
         return DefaultScheduleResponse.newBuilder()
-                .setStatus(201)
+                .setStatus(200)
                 .setScheduleUUID(input.getSchedule().getScheduleUuid())
                 .build();
     }

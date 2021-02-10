@@ -10,7 +10,7 @@ public class DeleteScheduleOutputMapper extends Mapper<DeleteScheduleUseCase.Out
     @Override
     public DefaultScheduleResponse map(DeleteScheduleUseCase.OutputValues input) {
         return DefaultScheduleResponse.newBuilder()
-                .setStatus(201)
+                .setStatus(200)
                 .setScheduleUUID(input.getSchedule().getScheduleUuid())
                 .build();
     }

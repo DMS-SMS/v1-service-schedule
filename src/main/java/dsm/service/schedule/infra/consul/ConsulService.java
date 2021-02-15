@@ -40,7 +40,7 @@ public class ConsulService {
                 .name("DMS.SMS.v1.service.schedule")
                 .address(address)
                 .port(port)
-                .check(Registration.RegCheck.ttl(1000000L))
+                .check(Registration.RegCheck.ttl(31536000L))
                 .tags(Collections.singletonList("schedule"))
                 .meta(Collections.singletonMap("version","0.8"))
                 .build();

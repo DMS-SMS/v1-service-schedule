@@ -32,7 +32,7 @@ public class GetTimetableUseCase extends UseCase<GetTimetableUseCase.InputValues
 
         return timetableRepository.findByGradeAndGroupAndDate(
                 account.getGrade(), account.getGroup(), generateDate(input.year, input.month, input.day)
-        ).orElseThrow(NotFoundException::new);
+        ).orElse(Timetable.builder().build());
     }
 
     private void checkAuthority(Account account) {

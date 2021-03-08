@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Getter
 @Builder
 @Table(indexes = {@Index(columnList = "targetGrade"), @Index(columnList = "targetGroup")})
-@Entity(name="test_tbl_timetable")
+@Entity(name="tbl_timetable")
 @NoArgsConstructor
 @AllArgsConstructor
 public class TimetableModel {

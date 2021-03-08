@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 @Builder
 @Getter
-@Entity(name="test_tbl_schedule")
+@Entity(name="tbl_schedule")
 @NoArgsConstructor
 @AllArgsConstructor
 public class ScheduleModel {

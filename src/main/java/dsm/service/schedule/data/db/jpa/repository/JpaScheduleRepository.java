@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface JpaScheduleRepository extends CrudRepository<ScheduleModel, String> {
-    @Query("FROM test_tbl_schedule s " +
+    @Query("FROM tbl_schedule s " +
             "WHERE :date BETWEEN " +
             "FUNCTION('date_format', s.startDate, '%Y-%m') AND FUNCTION('date_format', s.endDate, '%Y-%m')")
     List<ScheduleModel> findByCorrectDate(@Param("date") String date);

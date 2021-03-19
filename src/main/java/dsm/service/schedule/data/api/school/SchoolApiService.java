@@ -94,6 +94,10 @@ public class SchoolApiService {
     private TimetableModel.TimetableModelBuilder putSubjects(TimetableModel.TimetableModelBuilder builder, JSONArray row) {
         for (Object table: row) {
             JSONObject jsonTable = (JSONObject) table;
+            System.out.println(jsonTable);
+            System.out.println(jsonTable.get("PERIO").toString());
+            System.out.println(jsonTable.get("ITRT_CNTNT").toString());
+
             builder = pubSubject(builder, Integer.valueOf(jsonTable.get("PERIO").toString()), jsonTable.get("ITRT_CNTNT").toString());
         }
         return builder;

@@ -94,9 +94,6 @@ public class SchoolApiService {
     private TimetableModel.TimetableModelBuilder putSubjects(TimetableModel.TimetableModelBuilder builder, JSONArray row) {
         for (Object table: row) {
             JSONObject jsonTable = (JSONObject) table;
-            System.out.println(jsonTable);
-            System.out.println(jsonTable.get("PERIO").toString());
-            System.out.println(jsonTable.get("ITRT_CNTNT").toString());
 
             builder = pubSubject(builder, Integer.valueOf(jsonTable.get("PERIO").toString()), jsonTable.get("ITRT_CNTNT").toString());
         }
@@ -106,13 +103,13 @@ public class SchoolApiService {
     private TimetableModel.TimetableModelBuilder pubSubject(
             TimetableModel.TimetableModelBuilder builder, Integer perio, String subject) {
         switch (perio) {
-            case 1: builder.firstSubject(subject);
-            case 2: builder.secondSubject(subject);
-            case 3: builder.thirdSubject(subject);
-            case 4: builder.fourthSubject(subject);
-            case 5: builder.fifthSubject(subject);
-            case 6: builder.sixthSubject(subject);
-            case 7: builder.seventhSubject(subject);
+            case 1: return builder.firstSubject(subject);
+            case 2: return builder.secondSubject(subject);
+            case 3: return builder.thirdSubject(subject);
+            case 4: return builder.fourthSubject(subject);
+            case 5: return builder.fifthSubject(subject);
+            case 6: return builder.sixthSubject(subject);
+            case 7: return builder.seventhSubject(subject);
             default: return builder;
         }
     }
